@@ -21,9 +21,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $_SESSION['email'] = $email;
 
     if($_SESSION['email'] != "admin@gmail.com") {
-        header("location: user.html");
+        header("location: user.php");
     } else {
-        header("location: admin.html");
+        header("location: admin.php");
     }
     
   }
