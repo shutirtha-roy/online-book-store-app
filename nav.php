@@ -15,7 +15,7 @@
                 <a class="nav-link" href="books.html">Books</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="register.html">Register</a>
+                <a class="nav-link" href="register.php">Register</a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="login.php">Login</a>

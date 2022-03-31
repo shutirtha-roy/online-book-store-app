@@ -1,3 +1,58 @@
+<?php
+include 'Config/connect.php';
+
+
+$showAlert = false;
+$showError = false;
+
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+  $username = $_POST["username"];
+  $email = $_POST["email"];
+  $name = $_POST["name"];
+  $password = $_POST["password"];
+  $cpassword = $_POST["cpassword"];
+  $role = "user";
+  $location = $_POST["location"];
+  //$exits = false;
+
+
+  //Check whether this username Exists
+  $existsSql = "SELECT * FROM `users` where email = '$email'";
+  $result = mysqli_query($conn, $existsSql);
+  $numExistRows = mysqli_num_rows($result);
+  echo $numExistRows;
+
+  if($numExistRows > 0) {
+    //$exists = true;
+    $showError = "Email Already Exists";
+  } else {
+    if(($password == $cpassword) && $password != "") {
+      $sql = "INSERT INTO `users` (`username`, `email`, `name`, `password`, `role`, `location`) VALUES ('$username', '$email', '$name', '$password', '$role', '$location');";
+      $result = mysqli_query($conn, $sql);
+
+      if ($result) {
+        $showAlert = true;
+        //header("location: login.php");
+        $login = true;
+        session_start();
+        $_SESSION['loggedin'] = true;
+        $_SESSION['email'] = $email;
+        header("location: user.php");
+      }
+    }
+    else {
+      $showError = "Passwords do not match";
+    } 
+  }
+}
+
+
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,61 +67,35 @@
 <body class="bg-dark text-light">
 
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        
-
-
-
-      
-        <div class="collapse navbar-collapse container" id="navbarSupportedContent">
-          <a class="navbar-brand" href="#">Roy</a>
-            
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="index.html">Home</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="books.html">Books</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="register.html">Register</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="login.html">Login</a>
-            </li>
- 
-
-          </ul>
-        </div>
-    </nav>
+    <?php require 'nav.php'; ?>
 
     <h1 class="heading mt-5 h1">Register</h1>
     <div class="register">
         <div class="register-form">
-            <form class="login-form mx-auto">
+            <form class="login-form mx-auto" action="register.php" method="post">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" placeholder="Enter name">
+                    <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" required>
                 </div>
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" class="form-control" id="username" placeholder="Enter username">
+                    <input type="text" class="form-control" id="username" placeholder="Enter username" name="username" required>
                 </div>
                 <div class="form-group">
                   <label for="email">Email address</label>
-                  <input type="email" class="form-control" id="email" placeholder="Enter email">
+                  <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>
                 </div>
                 <div class="form-group">
                   <label for="password">Password</label>
-                  <input type="password" class="form-control" id="password" placeholder="Password">
+                  <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Confirm Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm Password">
+                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm Password" name="cpassword" required>
                 </div>
                 <div class="form-group">
                     <label for="location">Location</label>
-                    <input type="text" class="form-control" id="location" placeholder="Enter your location">
+                    <input type="text" class="form-control" id="location" placeholder="Enter your location" name="location" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
               </form>
