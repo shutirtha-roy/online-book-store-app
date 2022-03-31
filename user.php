@@ -50,12 +50,6 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['
         <h1 class="heading mt-5 p-5 h1">Products Purchased</h1>
     </div>
 
-
-
-
-
-
-
     <h1 class="heading mt-5 p-5 h2">Books Ordered</h1>
     <table class="table table-dark mx-auto" style="text-align: center; width: 80%;">
         <thead>
