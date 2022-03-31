@@ -1,1 +1,1 @@
-//Initialized
+//JS CODE
