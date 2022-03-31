@@ -1,3 +1,19 @@
+<?php
+include 'Config/connect.php';
+
+//session_start();
+/*
+if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
+  header("location: login.php");
+  exit;
+} */
+?>
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,13 +39,16 @@
             
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="admin.html">Dashboard</a>
+              <a class="nav-link" href="index.php">Home</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="books-admin.html">Books</a>
+                <a class="nav-link" href="books.html">Books</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="logout.php">Logout</a>
+                <a class="nav-link" href="register.html">Register</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="login.php">Login</a>
             </li>
  
 
@@ -38,47 +57,9 @@
     </nav>
 
 
-    <div class="admin-section">
-        <h1 class="heading mt-5 p-5 h1">Admin Panel</h1>
+    <div class="home-section">
+        <h1 class="heading mt-5 p-5 h1">Welcome to Roy's Online Book Store</h1>
     </div>
-
-
-
-
-
-
-
-    <h1 class="heading mt-5 p-5 h2">Books Ordered</h1>
-    <table class="table table-dark mx-auto" style="text-align: center; width: 80%;">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">User</th>
-            <th scope="col">Book name</th>
-            <th scope="col">Book id</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>2</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>4</td>
-          </tr>
-        </tbody>
-      </table>
     
     
 
