@@ -1,3 +1,18 @@
+<?php
+
+include 'Config/connect.php';
+
+session_start();
+
+if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['email'] == 'admin@gmail.com') {
+  header("location: login.php");
+  exit;
+} else {
+    
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,17 +28,12 @@
 
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        
-
-
-
-      
         <div class="collapse navbar-collapse container" id="navbarSupportedContent">
-          <a class="navbar-brand" href="#">Welcome Sam</a>
+          <a class="navbar-brand" href="#">Welcome <?php echo  ucfirst(explode("@",$_SESSION['email'])[0]) ?></a>
             
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="admin.html">Dashboard</a>
+              <a class="nav-link" href="user.php">Dashboard</a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="books-user.html">Books</a>
@@ -31,8 +41,6 @@
             <li class="nav-item active">
                 <a class="nav-link" href="logout.php">Logout</a>
             </li>
- 
-
           </ul>
         </div>
     </nav>

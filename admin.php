@@ -1,5 +1,7 @@
 <?php
 
+include 'Config/connect.php';
+
 session_start();
 
 if($_SESSION['email'] != "admin@gmail.com") {
@@ -24,30 +26,7 @@ if($_SESSION['email'] != "admin@gmail.com") {
 <body class="bg-dark text-light">
 
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        
-
-
-
-      
-        <div class="collapse navbar-collapse container" id="navbarSupportedContent">
-          <a class="navbar-brand" href="#">Roy</a>
-            
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="admin.html">Dashboard</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="books-admin.html">Books</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="logout.php">Logout</a>
-            </li>
- 
-
-          </ul>
-        </div>
-    </nav>
+    <?php require 'nav.php'; ?>
 
 
     <div class="admin-section">
