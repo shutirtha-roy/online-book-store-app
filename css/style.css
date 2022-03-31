@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+    --game-message: rgb(170, 216, 238);
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 0.4rem !important;
+}
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+}
+  
+li {
+    list-style-type: none;
+}
+
+
+/***********************HOME SECTION***********************/
+.heading {
+    font-size: 2.2rem;
+    text-align: center;
+    position: relative;
+}
+
+
+
+/**********************BOOK SECTION/**********************/
+.card img {
+    height: 7rem;
+}
+
+
+
+
+
+/*********************LOGIN FORM**********************/
+
+.login-form {
+    width: 50%;
+}
+
+
+
+
+
+/***********************CART***********************/
+.purchase-btn a {
+    display: block;
+    width: 10%;
+    margin: 0 auto;
+}
+
+
+
+
+
+/*****************INDIVIDUAL BOOKS********************/
+.book-img {
+    text-align: center;
+}
+
+
+.book-img img {
+    height: 25rem;
+    width: 40rem;
+}
