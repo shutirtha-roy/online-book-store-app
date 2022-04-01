@@ -12,30 +12,7 @@
 <body class="bg-dark text-light">
 
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        
-
-
-
-      
-        <div class="collapse navbar-collapse container" id="navbarSupportedContent">
-          <a class="navbar-brand" href="#">Roy</a>
-            
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="admin.html">Dashboard</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="books-admin.html">Books</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Logout</a>
-            </li>
- 
-
-          </ul>
-        </div>
-    </nav>
+    <?php require 'nav.php'; ?>
 
     <div class="alert alert-success" role="alert" hidden> 
         Updated Successfully

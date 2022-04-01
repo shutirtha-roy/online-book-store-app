@@ -12,26 +12,8 @@
 <body class="bg-dark text-light">
 
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        
-        <div class="collapse navbar-collapse container" id="navbarSupportedContent">
-          <a class="navbar-brand" href="#">Welcome Sam</a>
-            
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="user.html">Dashboard</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="books-user.html">Books</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Logout</a>
-            </li>
- 
+    <?php require 'nav.php'; ?>
 
-          </ul>
-        </div>
-    </nav>
 
     <div class="alert alert-success" role="alert" hidden>
         Book Added to Cart 
