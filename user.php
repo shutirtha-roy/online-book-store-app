@@ -36,7 +36,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['
               <a class="nav-link" href="user.php">Dashboard</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="books-user.html">Books</a>
+                <a class="nav-link" href="books-user.php">Books</a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="logout.php">Logout</a>
