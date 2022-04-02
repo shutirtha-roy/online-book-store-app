@@ -10,10 +10,6 @@ $book_sql = "SELECT * FROM `books` WHERE id=$id";
 $book = mysqli_query($conn, $book_sql);
 
 
-
-
-echo $id;
-
 ?>
 
 <!DOCTYPE html>
@@ -38,40 +34,37 @@ echo $id;
 
     <?php
         while($row = mysqli_fetch_assoc($book)) {
-        
+            $book_id = $row['id'];
+            $img_link = $row['product_image_link'];
+            $book_title = $row['name'];
+            if(strlen($book_title) < 10) {
+              $book_title .= " Limited Series";
+            }
 
+            $category_id = $row['category_id'];
+            $sql_specific_category = "SELECT `name` FROM `categories` WHERE id=$category_id";
+            $category_query =  mysqli_query($conn, $sql_specific_category);
+            $category_name = mysqli_fetch_assoc($category_query)['name'];
+
+            $book_author = $row['author'];
+            $book_description = $row['description'];
+            $book_preview_pdf = $row['product_preview_link'];
+            $preview_id = "individual-book.php?bookid=".$book_id;
+
+
+            echo '<div class="book-img m-5">
+                <img src="'.$img_link.'" class="card-img-top" alt="...">
+                <h1 class="h1">'.$book_title.'</h1>
+                <h5 class="card-title">Category: '.$category_name.'</h5>
+                <h5 class="card-title">Author: '.$book_author.'</h5>
+                <p class="card-text">'.$book_description.'</p>
+                <a href="#" class="btn btn-primary">Add To Cart</a>
+                <a href="'.$book_preview_pdf.'" class="btn btn-primary" target="_blank">Preview Book</a>
+            </div>';
         }
     ?>
 
-    <div class="book-img m-5">
-        <img src="images/example-book.PNG" class="card-img-top" alt="...">
-        <h1 class="h1">Thornton</h1>
-        <h5 class="card-title">Category: Fantasy</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
-            Some quick example text to build on the card title and make up the bulk of the card's content.Some quick 
-            example text to build on the card title and make up the bulk of the card's content.Some quick example text to 
-            build on the card title and make up the bulk of the card's content.Some quick example text to build on the card 
-            title and make up the bulk of the card's content.Some quick example text to build on the card title and make up 
-            the bulk of the card's content.Some quick example text to build on the card title and make up the bulk of the card's 
-            content.Some quick example text to build on the card title and make up the bulk of the card's content.Some quick
-             example text to build on the card title and make up the bulk of the card's content.Some quick example text to 
-             build on the card title and make up the bulk of the card's content.Some quick example text to build on the 
-             card title and make up the bulk of the card's content.Some quick example text to build on the card title 
-             and make up the bulk of the card's content.Some quick example text to build on the card title and make
-              up the bulk of the card's content.Some quick example text to build on the card title and make up the 
-              bulk of the card's content.Some quick example text to build on the card title and make up the bulk of 
-              the card's content.Some quick example text to build on the card title and make up the bulk of the card's content.
-              Some quick example text to build on the card title and make up the bulk of the card's content.Some quick example 
-              text to build on the card title and make up the bulk of the card's content.Some quick example text to build on the 
-              card title and make up the bulk of the card's content.Some quick example text to build on the card title and make 
-              up the bulk of the card's content.Some quick example text to build on the card title and make up the bulk of the 
-              card's content.Some quick example text to build on the card title and make up the bulk of the card's content.
-              Some quick example text to build on the card title and make up the bulk of the card's content.Some quick example text 
-              to build on the card title and make up the bulk of the card's content.Some quick example text to build on the 
-              card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Add To Cart</a>
-        <a href="#" class="btn btn-primary">Preview Book</a>
-    </div>
+    
     
 
 

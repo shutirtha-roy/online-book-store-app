@@ -114,7 +114,7 @@ $numExistRows = mysqli_num_rows($book_list);
                         } else if($loggedin && $_SESSION['email'] != "admin@gmail.com") {
                           echo '
                                 <a href="#" class="btn btn-primary">Add To Cart</a>
-                                <a href="'.$book_preview_pdf.'" class="btn btn-primary">Preview Book</a>
+                                <a href="'.$book_preview_pdf.'" class="btn btn-primary" target="_blank">Preview Book</a>
                               ';
                         }
                         
