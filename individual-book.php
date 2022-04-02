@@ -63,18 +63,6 @@ $book = mysqli_query($conn, $book_sql);
         }
     ?>
 
-    
-    
-
-
-
-
-
-
-
-    
-    
-    
 
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/2.0.0-alpha0/date_fns.min.js" integrity="sha512-0kon+2zxkK5yhflwFqaTaIhLVDKGVH0YH/jm8P8Bab/4EOgC/n7gWyy7WE4EXrfPOVDeNdaebiAng0nsfeFd9A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

@@ -15,6 +15,19 @@ $sql_books = "SELECT * FROM `books`";
 $book_list = mysqli_query($conn, $sql_books);
 $numExistRows = mysqli_num_rows($book_list);
 
+
+$sql_category = "SELECT * FROM `categories`";
+$category_list = mysqli_query($conn, $sql_category);
+
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+  $category_id = $_POST['category_id'];
+
+  $category_book_sql = "SELECT * FROM `books` WHERE category_id=$category_id";
+  $individual_category_books_query = mysqli_query($conn, $category_book_sql);
+  $book_list = $individual_category_books_query;
+
+}
+
 ?>
 
 
@@ -42,17 +55,18 @@ $numExistRows = mysqli_num_rows($book_list);
 
     <div class="book-heading">
         <h1 class="heading">Category</h1>
-        <div class="input-group w-50 mx-auto mt-4">
-            <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-              <option selected>Choose...</option>
-              <option value="1">Fantasy</option>
-              <option value="2">Horror</option>
-              <option value="3">Comedy</option>
+        <form action="books.php" method="post" class="input-group w-50 mx-auto mt-4">
+            <select name="category_id" class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+              <?php
+                  while($row = mysqli_fetch_assoc($category_list)) {
+                      echo "<option value = " . $row['id'] . "> ".$row['name']." </option>";
+                  }
+              ?>
             </select>
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary bd-white text-white" type="button">Select Category</button>
+              <input type="submit" class="btn btn-outline-secondary bd-white text-white" value="Select_Category" name="submit" type="button"></input>
             </div>
-          </div>
+        </form>
     </div>
 
 
