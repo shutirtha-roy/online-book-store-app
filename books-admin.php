@@ -1,7 +1,18 @@
 <?php
+
+include 'Config/connect.php';
 session_start();
 
+$sql_specific_category = "SELECT `name` FROM `categories` WHERE id=2";
+$category_query =  mysqli_query($conn, $sql_specific_category);
+print_r($category_query);
 
+
+
+
+$sql_books = "SELECT * FROM `books`";
+$book_list = mysqli_query($conn, $sql_books);
+$numExistRows = mysqli_num_rows($book_list);
 
 ?>
 
@@ -26,6 +37,8 @@ session_start();
         Book Deleted
     </div>
 
+    
+
     <div class="book-heading">
         <h1 class="heading">Category</h1>
         <div class="input-group w-50 mx-auto mt-4">
@@ -42,86 +55,33 @@ session_start();
     </div>
 
 
+      
     <div class="container mt-5">
-        <div class="row">
-          <div class="col-sm">
-            <div class="card" style="width: 18rem;">
-                <img src="images/example-book.PNG" class="card-img-top" alt="...">
-                <div class="card-body text-dark">
-                  <h5 class="card-title">Thornton</h5>
-                  <p class="card-title">Author</p>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="btn btn-primary">Edit</a>
-                  <a href="#" class="btn btn-primary btn-danger">Delete</a>
-                </div>
-            </div>
-          </div>
-          <div class="col-sm">
-            <div class="card" style="width: 18rem;">
-                <img src="images/example-book.PNG" class="card-img-top" alt="...">
-                <div class="card-body text-dark">
-                  <h5 class="card-title">Otto</h5>
-                  <p class="card-title">Author</p>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="btn btn-primary">Edit</a>
-                  <a href="#" class="btn btn-primary btn-danger">Delete</a>
-                </div>
-            </div>
-          </div>
-          <div class="col-sm">
-            <div class="card" style="width: 18rem;">
-                <img src="images/example-book.PNG" class="card-img-top" alt="...">
-                <div class="card-body text-dark">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-title">Author</p>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="btn btn-primary">Edit</a>
-                  <a href="#" class="btn btn-primary btn-danger">Delete</a>
-                </div>
-            </div>
-          </div>
-        </div>
+      <div class="row">
+        <?php
+          while($row = mysqli_fetch_assoc($book_list)) {
+                $img_link = $row['product_image_link'];
 
-        <div class="row mt-4">
-            <div class="col-sm">
-              <div class="card" style="width: 18rem;">
-                  <img src="images/example-book.PNG" class="card-img-top" alt="...">
-                  <div class="card-body text-dark">
-                    <h5 class="card-title">The Bird</h5>
-                    <p class="card-title">Author</p>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Edit</a>
-                    <a href="#" class="btn btn-primary btn-danger">Delete</a>
-                  </div>
-              </div>
-            </div>
-            <div class="col-sm">
-              <div class="card" style="width: 18rem;">
-                  <img src="images/example-book.PNG" class="card-img-top" alt="...">
-                  <div class="card-body text-dark">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-title">Author</p>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Edit</a>
-                    <a href="#" class="btn btn-primary btn-danger">Delete</a>
-                  </div>
-              </div>
-            </div>
-            <div class="col-sm">
-              <div class="card" style="width: 18rem;">
-                  <img src="images/example-book.PNG" class="card-img-top" alt="...">
-                  <div class="card-body text-dark">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-title">Author</p>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Edit</a>
-                    <a href="#" class="btn btn-primary btn-danger">Delete</a>
-                  </div>
-              </div>
-            </div>
-          </div>
+                echo 
+                    '<div class="col-sm col-3 mt-3">
+                        <div class="card" style="width: 18rem;">
+                          <img src="'.$img_link.'" class="card-img-top" alt="...">
+                          <div class="card-body text-dark">
+                            <h5 class="card-title">Thornton (Category)</h5>
+                            <p class="card-title">Author</p>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card\'s content.</p>
+                            <a href="#" class="btn btn-primary">Edit</a>
+                            <a href="#" class="btn btn-primary btn-danger">Delete</a>
+                          </div>
+                        </div>
+                      </div>';
+          }
+        ?>
       </div>
+    </div>
+        
 
+      </div>
     
 
     
