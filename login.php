@@ -61,7 +61,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <h1 class="heading mt-5 h1">Login</h1>
    
     <div class="login">
-        <form class="login-form mx-auto m-5 p-5" action="login.php" method="post">
+        <form class="login-form mx-auto m-2 p-5" action="login.php" method="post">
             <div class="form-group">
               <label for="exampleInputEmail1">Email address</label>
               <input type="email" class="form-control" id="email" name="email"  placeholder="Enter email" required>
