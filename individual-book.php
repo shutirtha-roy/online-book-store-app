@@ -51,7 +51,6 @@ $book = mysqli_query($conn, $book_sql);
             $book_preview_pdf = $row['product_preview_link'];
             $preview_id = "individual-book.php?bookid=".$book_id;
 
-
             echo '<div class="book-img m-5">
                 <img src="'.$img_link.'" class="card-img-top" alt="...">
                 <h1 class="h1">'.$book_title.'</h1>
