@@ -61,6 +61,7 @@ $numExistRows = mysqli_num_rows($book_list);
       <div class="row">
         <?php
           while($row = mysqli_fetch_assoc($book_list)) {
+            $book_id = $row['id'];
             $img_link = $row['product_image_link'];
             $book_title = $row['name'];
             if(strlen($book_title) < 10) {
@@ -74,20 +75,35 @@ $numExistRows = mysqli_num_rows($book_list);
 
             $book_author = $row['author'];
             $book_description = limit_words($row['description'],9);
-
+            $book_preview_pdf = $row['product_preview_link'];
+            $preview_id = "individual-book.php?bookid=".$book_id;
 
             echo 
                 '<div class="col-sm col-3 mt-3">
                     <div class="card" style="width: 18rem;">
                       <img src="'.$img_link.'" class="card-img-top" alt="...">
-                      <div class="card-body text-dark">
-                        <h5 class="card-title">'.$book_title.' ('.$category_name.')</h5>
+                      <div class="card-body text-dark">';
+                      if($loggedin && $_SESSION['email'] == "admin@gmail.com") {
+                        echo '
+                          <h5 class="card-title">'.$book_title.' ('.$category_name.')</h5>
+                          ';
+                      } else if($loggedin && $_SESSION['email'] != "admin@gmail.com") {
+                        echo '
+                          <h5 class="card-title"><a href="'.$preview_id.'">'.$book_title.'</a> ('.$category_name.')</h5>
+                          ';
+                      } else {
+                        echo '
+                          <h5 class="card-title"><a href="login.php">'.$book_title.'</a> ('.$category_name.')</h5>
+                          ';
+                      }
+                      
+                      echo'
                         <p class="card-title">'.$book_author.'</p>
                         <p class="card-text">'.$book_description.'</p>';
                         if(!$loggedin) {
                           echo '
                                 <a href="login.php" class="btn btn-primary">Add To Cart</a>
-                                <a href="login.php" class="btn btn-primary">Preview Book</a>
+                                <a href="'.$book_preview_pdf.'" class="btn btn-primary" target="_blank">Preview Book</a>
                               ';
                         } 
                         if($loggedin && $_SESSION['email'] == "admin@gmail.com") {
@@ -98,7 +114,7 @@ $numExistRows = mysqli_num_rows($book_list);
                         } else if($loggedin && $_SESSION['email'] != "admin@gmail.com") {
                           echo '
                                 <a href="#" class="btn btn-primary">Add To Cart</a>
-                                <a href="#" class="btn btn-primary">Preview Book</a>
+                                <a href="'.$book_preview_pdf.'" class="btn btn-primary">Preview Book</a>
                               ';
                         }
                         
