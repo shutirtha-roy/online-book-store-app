@@ -35,7 +35,7 @@ if($_SESSION['email'] != "admin@gmail.com") {
 
 
 
-
+    <a href="#" class="btn btn-lg btn-outline-secondary bd-white text-white d-block w-25 mx-auto">Add New Books</a>
 
 
 
