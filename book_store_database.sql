@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 31, 2022 at 08:17 PM
+-- Generation Time: Apr 02, 2022 at 11:19 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.14
 
@@ -35,8 +35,21 @@ CREATE TABLE `books` (
   `description` varchar(8888) NOT NULL,
   `price` float NOT NULL,
   `total_products` int(11) NOT NULL,
-  `product_preview_link` varchar(3000) NOT NULL
+  `product_preview_link` varchar(3000) NOT NULL,
+  `product_image_link` varchar(3000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `books`
+--
+
+INSERT INTO `books` (`id`, `category_id`, `name`, `author`, `description`, `price`, `total_products`, `product_preview_link`, `product_image_link`) VALUES
+(1, 4, 'Pride and Prejudice', 'Jane Austen', 'One of the best important book.', 150, 20, 'Assets/BookPreviews/1.pdf', 'Assets/BookImages/1.jpg'),
+(2, 4, 'Emma', 'Jane Austen', 'Great book with great outcomes.', 185, 25, 'Assets/BookPreviews/2.pdf', 'Assets/BookImages/2.jpg'),
+(3, 2, 'The Art of War', 'Sun Tzu', 'The truth inner way of every battle must overcome the righteousness.', 215, 30, 'Assets/BookPreviews/3.pdf', 'Assets/BookImages/3.jpg'),
+(4, 2, 'Adventures of Huckleberry Finn', 'Mark Twain', 'Adventures of Huckleberry Finn one of the best series.', 100, 20, 'Assets/BookPreviews/4.pdf', 'Assets/BookImages/4.jpg'),
+(5, 3, 'Alice in Wonderland', 'Lewis Carroll', 'Alice in Wonderland one of the best stories.', 340, 29, 'Assets/BookPreviews/5.pdf', 'Assets/BookImages/5.jpg'),
+(6, 3, 'Collected Works of Poe', 'Edgar Allan Poe', 'Collected Works of Poe is a fantasy book.', 268, 27, 'Assets/BookPreviews/6.pdf', 'Assets/BookImages/6.jpg');
 
 -- --------------------------------------------------------
 
@@ -95,7 +108,9 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `username`, `email`, `name`, `password`, `role`, `location`) VALUES
 (1, 'admin', 'admin@gmail.com', 'Admin', '18301028', 'admin', 'Dhaka, Bangladesh'),
 (2, 'sam123', 'sam@gmail.com', 'Sam', 'sam@gmail.com', 'user', '2/5, Lalmatia D-Block, Dhaka, Bangladesh - 1294'),
-(3, 'mark', 'mark@gmail.com', 'Mark', 'mark@gmail.com', 'user', '4B, Gulshan, Dhaka-1204');
+(3, 'mark', 'mark@gmail.com', 'Mark', 'mark@gmail.com', 'user', '4B, Gulshan, Dhaka-1204'),
+(4, 'samin', 'samin@gmail.com', 'Samin', 'samin@gmail.com', 'user', '12, Adabor, Dhaka, Bangladesh'),
+(5, 'asif', 'asif@gmail.com', 'Asif', 'asif@gmail.com', 'user', '12, Nikunjo, Dhaka');
 
 --
 -- Indexes for dumped tables
@@ -136,7 +151,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `books`
 --
 ALTER TABLE `books`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `book_purchase`
@@ -154,7 +169,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
