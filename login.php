@@ -58,7 +58,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <?php require 'nav.php'; ?>
 
-
+    <h1 class="heading mt-5 h1">Login</h1>
    
     <div class="login">
         <form class="login-form mx-auto m-5 p-5" action="login.php" method="post">
