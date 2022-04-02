@@ -1,3 +1,23 @@
+<?php
+
+include 'Config/connect.php';
+session_start();
+
+function limit_words($text, $limit) {
+  $words = explode(" ",$text);
+  return implode(" ",array_splice($words,0,$limit));
+}
+
+
+
+
+$sql_books = "SELECT * FROM `books`";
+$book_list = mysqli_query($conn, $sql_books);
+$numExistRows = mysqli_num_rows($book_list);
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +33,12 @@
 
 
     <?php require 'nav.php'; ?>
+
+    <div class="alert alert-danger" role="alert" hidden>
+        Book Deleted
+    </div>
+
+    
 
     <div class="book-heading">
         <h1 class="heading">Category</h1>
@@ -30,80 +56,63 @@
     </div>
 
 
+      
     <div class="container mt-5">
-        <div class="row">
-          <div class="col-sm">
-            <div class="card" style="width: 18rem;">
-                <img src="images/example-book.PNG" class="card-img-top" alt="...">
-                <div class="card-body text-dark">
-                  <h5 class="card-title">Thornton</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="btn btn-primary">Add To Cart</a>
-                  <a href="#" class="btn btn-primary">Preview Book</a>
-                </div>
-            </div>
-          </div>
-          <div class="col-sm">
-            <div class="card" style="width: 18rem;">
-                <img src="images/example-book.PNG" class="card-img-top" alt="...">
-                <div class="card-body text-dark">
-                  <h5 class="card-title">Otto</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="btn btn-primary">Add To Cart</a>
-                  <a href="#" class="btn btn-primary">Preview Book</a>
-                </div>
-            </div>
-          </div>
-          <div class="col-sm">
-            <div class="card" style="width: 18rem;">
-                <img src="images/example-book.PNG" class="card-img-top" alt="...">
-                <div class="card-body text-dark">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="btn btn-primary">Add To Cart</a>
-                  <a href="#" class="btn btn-primary">Preview Book</a>
-                </div>
-            </div>
-          </div>
-        </div>
+      <div class="row">
+        <?php
+          while($row = mysqli_fetch_assoc($book_list)) {
+            $img_link = $row['product_image_link'];
+            $book_title = $row['name'];
+            if(strlen($book_title) < 10) {
+              $book_title .= " Limited Series";
+            }
 
-        <div class="row mt-4">
-            <div class="col-sm">
-              <div class="card" style="width: 18rem;">
-                  <img src="images/example-book.PNG" class="card-img-top" alt="...">
-                  <div class="card-body text-dark">
-                    <h5 class="card-title">The Bird</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Add To Cart</a>
-                    <a href="#" class="btn btn-primary">Preview Book</a>
-                  </div>
-              </div>
-            </div>
-            <div class="col-sm">
-              <div class="card" style="width: 18rem;">
-                  <img src="images/example-book.PNG" class="card-img-top" alt="...">
-                  <div class="card-body text-dark">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Add To Cart</a>
-                    <a href="#" class="btn btn-primary">Preview Book</a>
-                  </div>
-              </div>
-            </div>
-            <div class="col-sm">
-              <div class="card" style="width: 18rem;">
-                  <img src="images/example-book.PNG" class="card-img-top" alt="...">
-                  <div class="card-body text-dark">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Add To Cart</a>
-                    <a href="#" class="btn btn-primary">Preview Book</a>
-                  </div>
-              </div>
-            </div>
-          </div>
+            $category_id = $row['category_id'];
+            $sql_specific_category = "SELECT `name` FROM `categories` WHERE id=$category_id";
+            $category_query =  mysqli_query($conn, $sql_specific_category);
+            $category_name = mysqli_fetch_assoc($category_query)['name'];
+
+            $book_author = $row['author'];
+            $book_description = limit_words($row['description'],9);
+
+
+            echo 
+                '<div class="col-sm col-3 mt-3">
+                    <div class="card" style="width: 18rem;">
+                      <img src="'.$img_link.'" class="card-img-top" alt="...">
+                      <div class="card-body text-dark">
+                        <h5 class="card-title">'.$book_title.' ('.$category_name.')</h5>
+                        <p class="card-title">'.$book_author.'</p>
+                        <p class="card-text">'.$book_description.'</p>';
+                        if(!$loggedin) {
+                          echo '
+                                <a href="login.php" class="btn btn-primary">Add To Cart</a>
+                                <a href="login.php" class="btn btn-primary">Preview Book</a>
+                              ';
+                        } 
+                        if($loggedin && $_SESSION['email'] == "admin@gmail.com") {
+                          echo '
+                                <a href="#" class="btn btn-primary">Edit</a>
+                                <a href="#" class="btn btn-primary btn-danger">Delete</a>
+                              ';
+                        } else if($loggedin && $_SESSION['email'] != "admin@gmail.com") {
+                          echo '
+                                <a href="#" class="btn btn-primary">Add To Cart</a>
+                                <a href="#" class="btn btn-primary">Preview Book</a>
+                              ';
+                        }
+                        
+                        echo'
+                      </div>
+                    </div>
+                  </div>';
+          }
+        ?>
       </div>
+    </div>
+        
 
+      </div>
     
 
     

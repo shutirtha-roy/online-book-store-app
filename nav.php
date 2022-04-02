@@ -35,7 +35,7 @@
                     <a class="nav-link" href="admin.php">Dashboard</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="books-admin.php">Books</a>
+                    <a class="nav-link" href="books.php">Books</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="logout.php">Logout</a>
@@ -46,7 +46,7 @@
                     <a class="nav-link" href="user.php">Dashboard</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="books-user.php">Books</a>
+                    <a class="nav-link" href="books.php">Books</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="logout.php">Logout</a>
