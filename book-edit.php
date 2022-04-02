@@ -1,3 +1,22 @@
+<?php
+
+include 'Config/connect.php';
+
+session_start();
+
+if($_SESSION['email'] != "admin@gmail.com") {
+  header("location: login.php");
+  exit;
+} else {
+    
+}
+
+//$id = $_GET['bookid'];
+$sql_category = "SELECT * FROM `categories`";
+$category_list = mysqli_query($conn, $sql_category);
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,11 +61,12 @@
 
 
                 <label for="select">Category</label>
-                <select class="custom-select mt-2 mb-4" id="inputGroupSelect04" aria-label="Example select with button addon">
-                    <option selected>Choose...</option>
-                    <option value="1">Fantasy</option>
-                    <option value="2">Horror</option>
-                    <option value="3">Comedy</option>
+                <select name="category_id" class="custom-select mt-2 mb-4" id="inputGroupSelect04" aria-label="Example select with button addon">
+                    <?php
+                        while($row = mysqli_fetch_assoc($category_list)) {
+                            echo "<option value = " . $row['id'] . "> ".$row['name']." </option>";
+                        }
+                    ?>
                 </select>
                 <button type="submit" class="btn btn-primary">Submit</button>
               </form>
