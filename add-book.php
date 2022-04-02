@@ -6,9 +6,12 @@ session_start();
 if($_SESSION['email'] != "admin@gmail.com") {
     header("location: login.php");
     exit;
-} else {
-    
 }
+
+
+
+$sql = "SELECT * FROM `categories`";
+$category_list = mysqli_query($conn, $sql);
 
 ?>
 
@@ -42,6 +45,21 @@ if($_SESSION['email'] != "admin@gmail.com") {
                 <label for="name">Book Name</label>
                 <input type="text" class="form-control" id="name" placeholder="Enter name of the book" name="name" required>
             </div>
+
+            <div class="group-content">
+
+                <label for="category">Choose a Category:</label>
+                <select name="name" id="category" required>
+
+                    <?php
+                        while($row = mysqli_fetch_assoc($category_list)) {
+                            echo "<option value = " . $row['id'] . "> ".$row['name']." </option>";
+                        }
+                    ?>
+
+                </select>
+            </div>
+
             <div class="form-group">
                 <label for="name">Author Name</label>
                 <input type="text" class="form-control" id="name" placeholder="Enter name of the author" name="author" required>
@@ -66,6 +84,9 @@ if($_SESSION['email'] != "admin@gmail.com") {
                 <label for="fileToUpload" class="d-block h4">Select image to upload:</label>
                 <input type="file" class="h4" name="fileToUpload" id="fileToUpload">
             </div>
+
+
+
             <input type="submit" class="btn btn-primary w-25 d-block mx-auto" value="Upload Image" name="submit">
         </div>
     </form>
