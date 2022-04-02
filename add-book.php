@@ -10,8 +10,98 @@ if($_SESSION['email'] != "admin@gmail.com") {
 
 
 
-$sql = "SELECT * FROM `categories`";
-$category_list = mysqli_query($conn, $sql);
+$sql_category = "SELECT * FROM `categories`";
+$category_list = mysqli_query($conn, $sql_category);
+
+$sql_books = "SELECT * FROM `books`";
+$book_list = mysqli_query($conn, $sql_books);
+$numExistRows = mysqli_num_rows($book_list);
+
+
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+    $book_id = $numExistRows + 1;
+    $category_id = $_POST["category_id"];
+    $name = $_POST["name"];
+    $author = $_POST["author"];
+    $description = $_POST["description"];
+    $price = $_POST["price"];
+    $total_products = $_POST["total_products"];
+    $product_preview_link = "";
+    $product_image_link = "";
+    
+
+    //PDF UPLOAD
+    $file_pdf = $_FILES['pdf_upload'];
+    $file_pdf_name = $_FILES['pdf_upload']['name'];
+    $file_pdf_tmp_name = $_FILES['pdf_upload']['tmp_name'];
+    $file_pdf_size = $_FILES['pdf_upload']['size'];
+    $file_pdf_error = $_FILES['pdf_upload']['error'];
+    $file_pdf_type = $_FILES['pdf_upload']['type'];
+    $file_pdf_ext = explode('.', $file_pdf_name);
+    $file_pdf_actual_ext = strtolower(end($file_pdf_ext));
+    $allowed_pdf = array('pdf');
+
+    if(in_array($file_pdf_actual_ext, $allowed_pdf)) {
+        if($file_pdf_error == 0) {
+            if($file_pdf_size < 500000000) {
+                $file_pdf_name_new = $book_id . "." . $file_pdf_actual_ext;
+                $file_pdf_destination = 'Assets/BookPreviews/'.$file_pdf_name_new;
+                $product_preview_link = $file_pdf_destination;
+                move_uploaded_file($file_pdf_tmp_name, $file_pdf_destination);
+            } else {
+                echo "File size limit is exceeded";
+            }
+        } else {
+            echo "An error occured in uploading the file";
+        }
+
+
+    } else {
+        echo "Only pdf extension is allowed";
+    }
+
+
+    //IMAGE UPLOAD
+    $file_image = $_FILES['image_upload'];
+    $file_image_name = $_FILES['image_upload']['name'];
+    $file_image_tmp_name = $_FILES['image_upload']['tmp_name'];
+    $file_image_size = $_FILES['image_upload']['size'];
+    $file_image_error = $_FILES['image_upload']['error'];
+    $file_image_type = $_FILES['image_upload']['type'];
+    $file_image_ext = explode('.', $file_image_name);
+    $file_image_actual_ext = strtolower(end($file_image_ext));
+    $allowed_image = array('jpg', 'jpeg', 'png');
+
+    if(in_array($file_image_actual_ext, $allowed_image)) {
+        if($file_image_error == 0) {
+            if($file_image_size < 500000000) {
+                $file_image_name_new = $book_id . "." . $file_image_actual_ext;
+                $file_image_destination = 'Assets/BookImages/'.$file_image_name_new;
+                $product_image_link = $file_image_destination;
+                move_uploaded_file($file_image_tmp_name, $file_image_destination);
+            } else {
+                echo "File size limit is exceeded";
+            }
+        } else {
+            echo "An error occured in uploading the file";
+        }
+    } else {
+        echo "Only 'jpg', 'jpeg', 'png' extension is allowed";
+    }
+
+
+    $sql_insert = "INSERT INTO `books` (`id`, `category_id`, `name`, `author`, `description`, `price`, `total_products`, `product_preview_link`, `product_image_link`) VALUES ('$book_id', '$category_id', '$name', '$author', '$description', '$price', '$total_products', '$product_preview_link', '$product_image_link');";
+    $result = mysqli_query($conn, $sql_insert);
+
+    if ($result) {
+        header("location: books-admin.php");
+    } else {
+        echo "Submission Unsuccessful";
+    }
+}
+
+
+
 
 ?>
 
@@ -39,7 +129,7 @@ $category_list = mysqli_query($conn, $sql);
     </div>
 
 
-    <form action="#" method="post" enctype="multipart/form-data" class="p-5">
+    <form action="add-book.php" method="post" enctype="multipart/form-data" class="p-5">
         <div class="form-group">
             <div class="form-group">
                 <label for="name">Book Name</label>
@@ -49,7 +139,7 @@ $category_list = mysqli_query($conn, $sql);
             <div class="group-content">
 
                 <label for="category">Choose a Category:</label>
-                <select name="name" id="category" required>
+                <select name="category_id" id="category" required>
 
                     <?php
                         while($row = mysqli_fetch_assoc($category_list)) {
@@ -70,24 +160,24 @@ $category_list = mysqli_query($conn, $sql);
             </div>
             <div class="form-group">
                 <label for="name">Price</label>
-                <input type="number" class="form-control" id="name" placeholder="Enter the price" name="price" required>
+                <input type="number" class="form-control" id="price" placeholder="Enter the price" name="price" required>
             </div>
             <div class="form-group">
                 <label for="name">Total Books</label>
-                <input type="number" class="form-control" id="name" placeholder="Enter the price" name="price" required>
+                <input type="number" class="form-control" id="total_products" placeholder="Enter the amount of Books" name="total_products" required>
             </div>
             <div class="form-group">
-                <label for="fileToUpload" class="d-block h4">Select pdf to upload for preview</label>
-                <input type="file" class="h4" name="fileToUpload" id="fileToUpload">
+                <label for="pdf_upload" class="d-block h4">Select pdf to upload for preview</label>
+                <input type="file" class="h4" name="pdf_upload" id="pdf_upload">
             </div>
             <div class="form-group">
-                <label for="fileToUpload" class="d-block h4">Select image to upload:</label>
-                <input type="file" class="h4" name="fileToUpload" id="fileToUpload">
+                <label for="image_upload" class="d-block h4">Select image to upload:</label>
+                <input type="file" class="h4" name="image_upload" id="image_upload">
             </div>
 
 
 
-            <input type="submit" class="btn btn-primary w-25 d-block mx-auto" value="Upload Image" name="submit">
+            <input type="submit" class="btn btn-primary w-25 d-block mx-auto" value="Submit" name="submit">
         </div>
     </form>
 
