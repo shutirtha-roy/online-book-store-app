@@ -91,6 +91,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             $book_description = limit_words($row['description'],9);
             $book_preview_pdf = $row['product_preview_link'];
             $preview_id = "individual-book.php?bookid=".$book_id;
+            $edit_id = "book-edit.php?editid=".$book_id;
 
             echo 
                 '<div class="col-sm col-3 mt-3">
@@ -122,7 +123,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                         } 
                         if($loggedin && $_SESSION['email'] == "admin@gmail.com") {
                           echo '
-                                <a href="#" class="btn btn-primary">Edit</a>
+                                <a href="'.$edit_id.'" class="btn btn-primary">Edit</a>
                                 <a href="#" class="btn btn-primary btn-danger">Delete</a>
                               ';
                         } else if($loggedin && $_SESSION['email'] != "admin@gmail.com") {

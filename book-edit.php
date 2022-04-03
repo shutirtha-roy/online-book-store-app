@@ -1,7 +1,7 @@
 <?php
 
 include 'Config/connect.php';
-
+$id = $_GET['editid'];
 session_start();
 
 if($_SESSION['email'] != "admin@gmail.com") {
@@ -11,9 +11,46 @@ if($_SESSION['email'] != "admin@gmail.com") {
     
 }
 
-//$id = $_GET['bookid'];
 $sql_category = "SELECT * FROM `categories`";
 $category_list = mysqli_query($conn, $sql_category);
+
+
+$sql_book = "SELECT * FROM `books` where id=$id";
+$book_list = mysqli_query($conn, $sql_book);
+$row = mysqli_fetch_assoc($book_list);
+
+
+$name = $row['name'];
+$category_id = $row['category_id'];
+
+$sql_specific_category = "SELECT `name` FROM `categories` WHERE id=$category_id";
+$category_query =  mysqli_query($conn, $sql_specific_category);
+$category_name = mysqli_fetch_assoc($category_query)['name'];
+
+$author = $row['author'];
+$description = $row['description'];
+$price = $row['price'];
+$total_products = $row['total_products'];
+
+
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+    //$appointment_mechanic = $_POST['mechanic_name'];
+    $name = $_POST['name'];
+    $category_id = $_POST['category_id'];
+    $author = $_POST['author'];
+    $description = $_POST['description'];
+    $price = $_POST['price'];
+    $total_products = $_POST['total_products'];
+
+    $sql_update_book = "UPDATE `books` SET `name` = '$name', `category_id` = '$category_id', `author` = '$author', `description` = '$description', `price` = '$price', `total_products` = '$total_products' WHERE `books`.`id` = $id;";
+    $result = mysqli_query($conn, $sql_update_book);
+    if($result)
+    {
+        header("location: books.php"); 
+    }
+    
+}
+
 ?>
 
 
@@ -41,30 +78,38 @@ $category_list = mysqli_query($conn, $sql_category);
     <h1 class="heading mt-5 h1">Edit Book</h1>
     <div class="register">
         <div class="register-form">
-            <form class="login-form mx-auto">
+            <form class="login-form mx-auto" method="post">
                 <div class="form-group">
                     <label for="name">Book Name</label>
-                    <input type="text" class="form-control" id="name" placeholder="Enter name" value="Thornton">
+                    <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" value="<?php echo $name ?>" required>
                 </div>
                 <div class="form-group">
-                    <label for="username">Author Name</label>
-                    <input type="text" class="form-control" id="username" placeholder="Enter username" value="Author">
+                    <label for="name">Author Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter name of the author" name="author" value="<?php echo $author ?>" required>
                 </div>
                 <div class="form-group">
-                    <label for="username">Description</label>
-                    <input type="text" class="form-control" id="username" placeholder="Enter username" value="This is a description">
+                    <label for="exampleFormControlTextarea1">Description</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"><?php echo $description ?></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="username">Price</label>
-                    <input type="text" class="form-control" id="username" placeholder="Enter username" value="$20">
+                    <label for="name">Price</label>
+                    <input type="number" class="form-control" id="price" placeholder="Enter the price" name="price" value="<?php echo $price ?>" required>
+                </div>
+                <div class="form-group">
+                    <label for="name">Total Books</label>
+                    <input type="number" class="form-control" id="total_products" placeholder="Enter the amount of Books" name="total_products" value="<?php echo $total_products ?>" required>
                 </div>
 
-
+                <?php echo $category_name; ?>
                 <label for="select">Category</label>
                 <select name="category_id" class="custom-select mt-2 mb-4" id="inputGroupSelect04" aria-label="Example select with button addon">
                     <?php
+                        echo "<option selected='$category_name' value = " . $category_id . " selected> ".$category_name." </option>";
                         while($row = mysqli_fetch_assoc($category_list)) {
-                            echo "<option value = " . $row['id'] . "> ".$row['name']." </option>";
+                            if($category_id != $row['id']) {
+                                echo "<option value = " . $row['id'] . "> ".$row['name']." </option>";
+                            }
+                            
                         }
                     ?>
                 </select>
