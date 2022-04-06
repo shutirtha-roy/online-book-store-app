@@ -105,8 +105,11 @@ if(count($_POST) > 0) {
       $book_cart_user = "SELECT * FROM `book_cart` WHERE user_id=$user_id";
       $user_cart_list = mysqli_query($conn, $book_cart_user);
       $num_cart_user_rows = mysqli_num_rows($user_cart_list);
+
+      $user_cart_id = "cart.php?userid=".$user_id;
       echo '<div class="alert alert-success w-50 mx-auto" role="alert">
-              Added To Cart <b><span>' . $num_cart_user_rows . '</span> Book Added</b> <a type="submit" href="#" class="btn btn-outline-secondary bg-dark text-white ml-5 font-weight-bold" value="" name="submit" type="button">Proceed To Checkout</a>
+              Added To Cart <b><span>' . $num_cart_user_rows . '</span> Book Added</b> 
+              <a type="submit" href="'.$user_cart_id.'" class="btn btn-outline-secondary bg-dark text-white ml-5 font-weight-bold" value="" name="submit" type="button">Proceed To Checkout</a>
               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
