@@ -6,7 +6,7 @@ session_start();
 
 
 
-$cart_book_sql = "SELECT * FROM `book_cart` WHERE id=$id";
+$cart_book_sql = "SELECT * FROM `book_cart` WHERE user_id=$id";
 $cart_book = mysqli_query($conn, $cart_book_sql);
 
 ?>
@@ -43,33 +43,54 @@ $cart_book = mysqli_query($conn, $cart_book_sql);
 
 
 
-    <h1 class="heading mt-5 p-5 h2">Books Ordered</h1>
+    <h1 class="heading h2 mb-5">Books Ordered</h1>
     <table class="table table-dark mx-auto" style="text-align: center; width: 80%;">
         <thead>
           <tr>
             <th scope="col">#</th>
             <th scope="col">Book name</th>
-            <th scope="col">Book id</th>
             <th scope="col">Price</th>
+            <th scope="col">Remove Product</th>
           </tr>
         </thead>
         <tbody>
         <?php
+          $count = 1;
+          $total = 0;
+           
           while($row = mysqli_fetch_assoc($cart_book)) {
-            
+
+            $user_id = $row['user_id'];
+            $product_id = $row['product_id'];
+            $book_id = $row['product_id'];
+            $user_name = $row['user_name'];
+            $book_title = $row['product_name'];
+            $price = $row['price'];
+            $total += $price;
+
+            echo '<tr>
+                    <th scope="row">'. $count .'</th>
+                    <td>'. $book_title .'</td>
+                    <td>'. $price .'Tk</td>
+                    <td><a class="btn bg-danger">Delete</a></td>
+                  </tr>';
+
+            $count += 1;
+
           }
         ?>
           <tr>
-            <th scope="row">1</th>
-            <td>Otto</td>
-            <td>2</td>
-            <td>$28</td>
+            <td>
+            <td>Total Price</td>
+            
+            <td colspan="2"> <?php echo $total ?> Taka</td>
           </tr>
+          
         </tbody>
       </table>
 
 
-      <div class="purchase-btn">
+      <div class="purchase-btn mb-5">
         <a href="#" class="btn btn-primary">Purchase Book</a>
       </div>
       
