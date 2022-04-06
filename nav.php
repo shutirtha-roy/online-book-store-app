@@ -19,7 +19,7 @@
                     <a class="nav-link" href="index.php">Home</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="books.php">Books</a>
+                    <a class="nav-link" href="general-books.php">Books</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="register.php">Register</a>
