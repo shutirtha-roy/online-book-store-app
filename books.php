@@ -10,6 +10,26 @@ function limit_words($text, $limit) {
 
 
 
+//USER
+$user_email = $_SESSION['email'];
+$sql_user  = "SELECT * FROM `users` WHERE email='$user_email'";
+$user_list = mysqli_query($conn, $sql_user);
+$user_row = mysqli_fetch_assoc($user_list);
+$user_id = $user_row['id'];
+$user_name = $user_row['name'];
+
+
+
+$showAlert = false;
+$book_cart = "SELECT * FROM `book_cart` WHERE user_id=$user_id";
+$cart_list = mysqli_query($conn, $book_cart);
+$numCartRows = mysqli_num_rows($cart_list);
+if($numCartRows > 0) {
+  $showAlert = true;
+}
+
+
+
 
 $sql_books = "SELECT * FROM `books`";
 $book_list = mysqli_query($conn, $sql_books);
@@ -19,14 +39,41 @@ $numExistRows = mysqli_num_rows($book_list);
 $sql_category = "SELECT * FROM `categories`";
 $category_list = mysqli_query($conn, $sql_category);
 
-if($_SERVER["REQUEST_METHOD"] == "POST") {
-  $category_id = $_POST['category_id'];
+//if($_SERVER["REQUEST_METHOD"] == "POST") {
 
-  $category_book_sql = "SELECT * FROM `books` WHERE category_id=$category_id";
-  $individual_category_books_query = mysqli_query($conn, $category_book_sql);
-  $book_list = $individual_category_books_query;
+if(count($_POST) > 0) {
+  if($_POST['submit'] == 'Select_Category') {
+    $category_id = $_POST['category_id'];
+    $category_book_sql = "SELECT * FROM `books` WHERE category_id=$category_id";
+    $individual_category_books_query = mysqli_query($conn, $category_book_sql);
+    $book_list = $individual_category_books_query;
+  }
+
+  if($_POST['submit'] == 'Add_To_Cart') {
+
+    $book_cart = "SELECT * FROM `book_cart`";
+    $cart_list = mysqli_query($conn, $book_cart);
+    $numExistRows = mysqli_num_rows($cart_list);
+
+    $cart_id = $numExistRows + 1;
+    //$user_id;
+    $product_id = $_POST['book_id'];
+    //$user_name
+    $book_title = $_POST['book_title'];
+    $book_price = $_POST['book_price']; 
+
+    $sql_cart = "INSERT INTO `book_cart` (`id`, `user_id`, `product_id`, `user_name`, `product_name`, `price`) VALUES ('$cart_id', '$user_id', '$product_id', '$user_name', '$book_title', '$book_price');";
+    $result_cart = mysqli_query($conn, $sql_cart);
+    if ($result_cart) {
+      $showAlert = true;
+    }
+
+
+  }
+
 
 }
+
 
 ?>
 
@@ -51,16 +98,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         Book Deleted
     </div>
 
+    <?php
     
-    <div class="alert alert-success w-50 mx-auto" role="alert">
-        Added To Cart <b>2 Book Added</b> <a type="submit" href="#" class="btn btn-outline-secondary bg-dark text-white ml-5 font-weight-bold" value="" name="submit" type="button">Proceed To Checkout</a>
-        
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
 
+    if($showAlert) {
+      $book_cart_user = "SELECT * FROM `book_cart` WHERE user_id=$user_id";
+      $user_cart_list = mysqli_query($conn, $book_cart_user);
+      $num_cart_user_rows = mysqli_num_rows($user_cart_list);
+      echo '<div class="alert alert-success w-50 mx-auto" role="alert">
+              Added To Cart <b><span>' . $num_cart_user_rows . '</span> Book Added</b> <a type="submit" href="#" class="btn btn-outline-secondary bg-dark text-white ml-5 font-weight-bold" value="" name="submit" type="button">Proceed To Checkout</a>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>';
+    }
     
+
+    ?>
 
     <div class="book-heading">
         <h1 class="heading">Category</h1>
@@ -73,6 +127,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
               ?>
             </select>
             <div class="input-group-append">
+              
               <input type="submit" class="btn btn-outline-secondary bd-white text-white" value="Select_Category" name="submit" type="button"></input>
             </div>
         </form>
@@ -139,7 +194,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                               ';
                         } else if($loggedin && $_SESSION['email'] != "admin@gmail.com") {
                           echo '
-                                <a href="#" class="btn btn-primary">Add To Cart</a>
+                                <form action="books.php" method="post" class="d-inline">
+                                  <input type="number" name="book_id" value="'.$book_id.'" hidden>
+                                  <input type="text" name="book_title" value="'.$book_title.'" hidden>
+                                  <input type="number" name="book_price" value="'.$book_price.'" hidden>
+                                  <input type="submit" class="btn btn-primary" value="Add_To_Cart" name="submit" type="button"></input>
+                                </form>
                                 <a href="'.$book_preview_pdf.'" class="btn btn-primary" target="_blank">Preview Book</a>
                               ';
                         }
