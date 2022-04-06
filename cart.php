@@ -5,6 +5,10 @@ $id = $_GET['userid'];
 session_start();
 
 
+if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['email'] == 'admin@gmail.com') {
+  header("location: login.php");
+  exit;
+}
 
 $cart_book_sql = "SELECT * FROM `book_cart` WHERE user_id=$id";
 $cart_book = mysqli_query($conn, $cart_book_sql);
@@ -59,7 +63,7 @@ $cart_book = mysqli_query($conn, $cart_book_sql);
           $total = 0;
            
           while($row = mysqli_fetch_assoc($cart_book)) {
-
+            $cart_id = $row['id'];
             $user_id = $row['user_id'];
             $product_id = $row['product_id'];
             $book_id = $row['product_id'];
@@ -67,12 +71,13 @@ $cart_book = mysqli_query($conn, $cart_book_sql);
             $book_title = $row['product_name'];
             $price = $row['price'];
             $total += $price;
+            $delete_id = "cart-delete.php?cartid=".$cart_id;
 
             echo '<tr>
                     <th scope="row">'. $count .'</th>
                     <td>'. $book_title .'</td>
                     <td>'. $price .'Tk</td>
-                    <td><a class="btn bg-danger">Delete</a></td>
+                    <td><a href="'.$delete_id.'" class="btn bg-danger text-white">Delete</a></td>
                   </tr>';
 
             $count += 1;
