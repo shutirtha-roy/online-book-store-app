@@ -52,6 +52,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     
+    <div class="alert alert-success w-50 mx-auto" role="alert">
+        Added To Cart <b>2 Book Added</b> <a type="submit" href="#" class="btn btn-outline-secondary bg-dark text-white ml-5 font-weight-bold" value="" name="submit" type="button">Proceed To Checkout</a>
+        
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    
 
     <div class="book-heading">
         <h1 class="heading">Category</h1>
@@ -78,6 +87,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             $book_id = $row['id'];
             $img_link = $row['product_image_link'];
             $book_title = $row['name'];
+            $book_price = $row['price'];
             if(strlen($book_title) < 10) {
               $book_title .= " Limited Series";
             }
@@ -114,6 +124,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                       
                       echo'
                         <p class="card-title">'.$book_author.'</p>
+                        <p class="card-title font-weight-bold">'.$book_price.' Tk</p>
                         <p class="card-text">'.$book_description.'</p>';
                         if(!$loggedin) {
                           echo '
