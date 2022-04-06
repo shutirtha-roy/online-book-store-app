@@ -62,7 +62,7 @@ if(count($_POST) > 0) {
     $book_title = $_POST['book_title'];
     $book_price = $_POST['book_price']; 
 
-    $sql_cart = "INSERT INTO `book_cart` (`id`, `user_id`, `product_id`, `user_name`, `product_name`, `price`) VALUES ('$cart_id', '$user_id', '$product_id', '$user_name', '$book_title', '$book_price');";
+    $sql_cart = "INSERT INTO `book_cart` (`user_id`, `product_id`, `user_name`, `product_name`, `price`) VALUES ('$user_id', '$product_id', '$user_name', '$book_title', '$book_price');";
     $result_cart = mysqli_query($conn, $sql_cart);
     if ($result_cart) {
       $showAlert = true;
