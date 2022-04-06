@@ -9,7 +9,6 @@ session_start();
 $cart_book_sql = "SELECT * FROM `book_cart` WHERE id=$id";
 $cart_book = mysqli_query($conn, $cart_book_sql);
 
-echo $id;
 ?>
 
 
@@ -55,6 +54,11 @@ echo $id;
           </tr>
         </thead>
         <tbody>
+        <?php
+          while($row = mysqli_fetch_assoc($cart_book)) {
+            
+          }
+        ?>
           <tr>
             <th scope="row">1</th>
             <td>Otto</td>
