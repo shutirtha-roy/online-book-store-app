@@ -1,3 +1,18 @@
+<?php
+
+include 'Config/connect.php';
+$id = $_GET['userid'];
+session_start();
+
+
+
+$cart_book_sql = "SELECT * FROM `book_cart` WHERE id=$id";
+$cart_book = mysqli_query($conn, $cart_book_sql);
+
+echo $id;
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
