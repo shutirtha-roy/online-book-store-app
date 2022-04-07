@@ -36,8 +36,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
     //echo $description;
     //$mysqli = new mysqli("localhost","root","","book_store_database");
-
-    $description = preg_replace('~\D~', '', $description);
+    $description = str_replace(' ', '-', $description);
+    $description = preg_replace('/[^A-Za-z0-9\-]/', '', $description);
+    $description = str_replace('-', ' ', $description);
     //$sql_insert = "INSERT INTO `books` (`category_id`, `name`, `author`, `description`, `price`, `total_products`, `product_preview_link`, `product_image_link`) VALUES ('$category_id', '$name', '$author', '$description', '$price', '$total_products', '$product_preview_link', '$product_image_link');";
     $sql_insert = "INSERT INTO `books` (`id`, `category_id`, `name`, `author`, `description`, `price`, `total_products`, `product_preview_link`, `product_image_link`) VALUES (NULL, '$category_id', '$name', '$author', '$description', $price, $total_products, 'test', 'test');";
     
