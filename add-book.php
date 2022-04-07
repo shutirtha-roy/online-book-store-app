@@ -19,7 +19,7 @@ $numExistRows = mysqli_num_rows($book_list);
 
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
-    
+
     $category_id = $_POST["category_id"];
     $name = $_POST["name"];
     $author = $_POST["author"];
@@ -34,8 +34,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $img_tmp_name = "";
     $img_tmp_location = "";
 
+    //echo $description;
+    //$mysqli = new mysqli("localhost","root","","book_store_database");
+
+    $description = preg_replace('~\D~', '', $description);
     //$sql_insert = "INSERT INTO `books` (`category_id`, `name`, `author`, `description`, `price`, `total_products`, `product_preview_link`, `product_image_link`) VALUES ('$category_id', '$name', '$author', '$description', '$price', '$total_products', '$product_preview_link', '$product_image_link');";
     $sql_insert = "INSERT INTO `books` (`id`, `category_id`, `name`, `author`, `description`, `price`, `total_products`, `product_preview_link`, `product_image_link`) VALUES (NULL, '$category_id', '$name', '$author', '$description', $price, $total_products, 'test', 'test');";
+    
+    //$sql_insert = "INSERT INTO `books` (`id`, `category_id`, `name`, `author`, `description`, `price`, `total_products`, `product_preview_link`, `product_image_link`) VALUES (NULL, '3', 'yuyu', 'yuyu', 'Debbie had taken George for granted for more than fifteen years now. He wasn\'t sure what exactly had made him choose this time and place to address the issue, but he decided that now was the time. He looked straight into her eyes and just as she was about to speak, turned away and walked out the door. Betty decided to write a short story and she was sure it was going to be amazing. She had already written it in her head and each time she thought about it she grinned from ear to ear knowing how wonderful it would be. She could imagine the accolades coming in and the praise she would receive for creating such a wonderful piece. She was therefore extremely frustrated when she actually sat down to write the short story and the story that was so beautiful inside her head refused to come out that way on paper. He was after the truth. At least, that\'s what he told himself. He believed it, but any rational person on the outside could see he was lying to himself. It was apparent he was really only after his own truth that he\'d already decided and was after this truth because the facts didn\'t line up with the truth he wanted. So he continued to tell everyone he was after the truth oblivious to the real truth sitting right in front of him.', '23', '23', 'weer', 'rer')";
+    /* if (!$mysqli -> query("INSERT INTO `books` (`id`, `category_id`, `name`, `author`, `description`, `price`, `total_products`, `product_preview_link`, `product_image_link`) VALUES (NULL, '$category_id', '$name', '$author', '$description', '$price', '$total_products', 'test', 'test');")) {
+        print_r($mysqli -> error_list);
+    } */
+
     $result_insert = mysqli_query($conn, $sql_insert);
 
     if($result_insert) {
