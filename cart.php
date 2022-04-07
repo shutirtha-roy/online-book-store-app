@@ -71,7 +71,7 @@ $cart_book = mysqli_query($conn, $cart_book_sql);
             $book_title = $row['product_name'];
             $price = $row['price'];
             $total += $price;
-            $delete_id = "cart-delete.php?cartid=".$cart_id;
+            $delete_id = "cart-delete.php?bookid=".$product_id;
 
             echo '<tr>
                     <th scope="row">'. $count .'</th>
