@@ -102,7 +102,11 @@ if($num_cart_rows == 0) {
 
 
       <div class="purchase-btn mb-5">
-        <a href="#" class="btn btn-primary">Purchase Book</a>
+        <?php
+          $user_cart_id = "delete-cart-add-purchase.php?userid=".$id;
+
+        ?>
+        <a href="<?php echo $user_cart_id ?>" class="btn btn-primary">Purchase Book</a>
       </div>
       
 
