@@ -10,6 +10,20 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['
 } else {
     
 }
+
+
+//USER
+$user_email = $_SESSION['email'];
+$sql_user  = "SELECT * FROM `users` WHERE email='$user_email'";
+$user_list = mysqli_query($conn, $sql_user);
+$user_row = mysqli_fetch_assoc($user_list);
+$user_id = $user_row['id'];
+
+
+$purchase_book = "SELECT * FROM `book_purchase` WHERE user_id=$user_id";
+$purchase_list = mysqli_query($conn, $purchase_book);
+$purchase_rows = mysqli_num_rows($purchase_list);
+
 ?>
 
 
@@ -45,36 +59,73 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['
         </div>
     </nav>
 
+    
 
-    <div class="admin-section">
-        <h1 class="heading mt-5 p-5 h1">Products Purchased</h1>
-    </div>
+    <?php
+      $cart_book_sql = "SELECT * FROM `book_cart` WHERE user_id=$user_id";
+      $cart_book = mysqli_query($conn, $cart_book_sql);
+      $num_cart_rows = mysqli_num_rows($cart_book);
 
-    <h1 class="heading mt-5 p-5 h2">Books Ordered</h1>
-    <table class="table table-dark mx-auto" style="text-align: center; width: 80%;">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Book name</th>
-            <th scope="col">Book id</th>
-            <th scope="col">Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Otto</td>
-            <td>2</td>
-            <td>$28</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Thornton</td>
-            <td>1</td>
-            <td>$21</td>
-          </tr>
-        </tbody>
-      </table>
+      if($num_cart_rows > 0) {
+        $book_cart_user = "SELECT * FROM `book_cart` WHERE user_id=$user_id";
+        $user_cart_list = mysqli_query($conn, $book_cart_user);
+        $num_cart_user_rows = mysqli_num_rows($user_cart_list);
+
+        $user_cart_id = "cart.php?userid=".$user_id;
+        echo '<div class="alert alert-success w-50 mx-auto" role="alert">
+                Added To Cart <b><span>' . $num_cart_user_rows . '</span> Book Added</b> 
+                <a type="submit" href="'.$user_cart_id.'" class="btn btn-outline-secondary bg-dark text-white ml-5 font-weight-bold" value="" name="submit" type="button">Proceed To Checkout</a>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>';
+      }
+
+
+      if($purchase_rows > 0) {
+        
+        
+
+          echo '<div class="admin-section">
+                    <h1 class="heading mt-5 p-5 h1">Products Purchased</h1>
+                </div>
+
+                <h1 class="heading mt-5 p-5 h2">Books Ordered</h1>
+                <table class="table table-dark mx-auto" style="text-align: center; width: 80%;">
+                        <thead>';
+                        echo '<tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Book name</th>
+                                <th scope="col">Book id</th>
+                                <th scope="col">Price</th>
+                              </tr>
+                        </thead>
+                        <tbody>';
+
+                        $count = 1;
+                        while($row = mysqli_fetch_assoc($purchase_list)) {
+                          $book_id = $row['product_id'];
+                          $book_title = $row['product_name'];
+                          $price = $row['price'];
+                          echo '<tr>
+                              <th scope="row">'.$count.'</th>
+                              <td>'.$book_title.'</td>
+                              <td>'.$book_id.'</td>
+                              <td>'.$price.' Tk</td>
+                            </tr>';
+                            $count += 1;
+                          }
+                    echo '</tbody>
+                  </table>';
+      } else {
+        echo '<div class="admin-section">
+                  <h1 class="heading mt-5 p-5 h1">Order Books At Resonable Prices</h1>
+              </div>
+              <a class="btn btn-info mx-auto w-50 d-block" href="books.php">Click Here To Order Books At Resonable Prices</a>';
+      }
+
+    ?>
+    
     
     
 
