@@ -10,6 +10,17 @@ if($_SESSION['email'] != "admin@gmail.com") {
 } else {
     
 }
+
+
+$purchase_book = "SELECT * FROM `book_purchase`";
+$purchase_list = mysqli_query($conn, $purchase_book);
+$purchase_rows = mysqli_num_rows($purchase_list);
+
+
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -40,36 +51,39 @@ if($_SESSION['email'] != "admin@gmail.com") {
 
 
     <h1 class="heading mt-5 p-5 h2">Books Ordered</h1>
-    <table class="table table-dark mx-auto" style="text-align: center; width: 80%;">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">User</th>
-            <th scope="col">Book name</th>
-            <th scope="col">Book id</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>2</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>4</td>
-          </tr>
-        </tbody>
-      </table>
+
+    <?php
+      if($purchase_rows > 0) {
+        echo '
+              <table class="table table-dark mx-auto" style="text-align: center; width: 80%;">
+                <thead>';
+                echo '<tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Book name</th>
+                        <th scope="col">Customer Name</th>
+                        <th scope="col">Price</th>
+                      </tr>
+                </thead>
+                <tbody>';
+
+                $count = 1;
+                while($row = mysqli_fetch_assoc($purchase_list)) {
+                  $book_id = $row['product_id'];
+                  $book_title = $row['product_name'];
+                  $price = $row['price'];
+                  $user_name = $row['user_name'];
+                  echo '<tr>
+                          <th scope="row">'.$count.'</th>
+                          <td>'.$book_title.'</td>
+                          <td>'.$user_name.'</td>
+                          <td>'.$price.' Tk</td>
+                        </tr>';
+                    $count += 1;
+                  }
+                  echo '</tbody>
+                </table>';
+      }
+    ?>
     
     
 
