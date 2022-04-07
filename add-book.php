@@ -19,7 +19,7 @@ $numExistRows = mysqli_num_rows($book_list);
 
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
-    $book_id = $numExistRows + 1;
+    
     $category_id = $_POST["category_id"];
     $name = $_POST["name"];
     $author = $_POST["author"];
@@ -28,75 +28,100 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $total_products = $_POST["total_products"];
     $product_preview_link = "";
     $product_image_link = "";
-    
 
-    //PDF UPLOAD
-    $file_pdf = $_FILES['pdf_upload'];
-    $file_pdf_name = $_FILES['pdf_upload']['name'];
-    $file_pdf_tmp_name = $_FILES['pdf_upload']['tmp_name'];
-    $file_pdf_size = $_FILES['pdf_upload']['size'];
-    $file_pdf_error = $_FILES['pdf_upload']['error'];
-    $file_pdf_type = $_FILES['pdf_upload']['type'];
-    $file_pdf_ext = explode('.', $file_pdf_name);
-    $file_pdf_actual_ext = strtolower(end($file_pdf_ext));
-    $allowed_pdf = array('pdf');
+    $preview_tmp_name = "";
+    $preview_tmp_location = "";
+    $img_tmp_name = "";
+    $img_tmp_location = "";
 
-    if(in_array($file_pdf_actual_ext, $allowed_pdf)) {
-        if($file_pdf_error == 0) {
-            if($file_pdf_size < 500000000) {
-                $file_pdf_name_new = $book_id . "." . $file_pdf_actual_ext;
-                $file_pdf_destination = 'Assets/BookPreviews/'.$file_pdf_name_new;
-                $product_preview_link = $file_pdf_destination;
-                move_uploaded_file($file_pdf_tmp_name, $file_pdf_destination);
+    //$sql_insert = "INSERT INTO `books` (`category_id`, `name`, `author`, `description`, `price`, `total_products`, `product_preview_link`, `product_image_link`) VALUES ('$category_id', '$name', '$author', '$description', '$price', '$total_products', '$product_preview_link', '$product_image_link');";
+    $sql_insert = "INSERT INTO `books` (`id`, `category_id`, `name`, `author`, `description`, `price`, `total_products`, `product_preview_link`, `product_image_link`) VALUES (NULL, '$category_id', '$name', '$author', '$description', $price, $total_products, 'test', 'test');";
+    $result_insert = mysqli_query($conn, $sql_insert);
+
+    if($result_insert) {
+        $sql_inserted_book = "SELECT * FROM `books` ORDER BY ID DESC LIMIT 1";
+        $sql_inserted_query = mysqli_query($conn, $sql_inserted_book);
+        $book_values = mysqli_fetch_assoc($sql_inserted_query);
+        $book_id = $book_values['id'];
+
+        //PDF UPLOAD
+        $file_pdf = $_FILES['pdf_upload'];
+        $file_pdf_name = $_FILES['pdf_upload']['name'];
+        $file_pdf_tmp_name = $_FILES['pdf_upload']['tmp_name'];
+        $file_pdf_size = $_FILES['pdf_upload']['size'];
+        $file_pdf_error = $_FILES['pdf_upload']['error'];
+        $file_pdf_type = $_FILES['pdf_upload']['type'];
+        $file_pdf_ext = explode('.', $file_pdf_name);
+        $file_pdf_actual_ext = strtolower(end($file_pdf_ext));
+        $allowed_pdf = array('pdf');
+
+        if(in_array($file_pdf_actual_ext, $allowed_pdf)) {
+            if($file_pdf_error == 0) {
+                if($file_pdf_size < 500000000) {
+                    $file_pdf_name_new = $book_id . "." . $file_pdf_actual_ext;
+                    $file_pdf_destination = 'Assets/BookPreviews/'.$file_pdf_name_new;
+                    $product_preview_link = $file_pdf_destination;
+
+                    $preview_tmp_name = $file_pdf_tmp_name;
+                    $preview_tmp_location = $file_pdf_destination; 
+                    
+                    
+                } else {
+                    echo "File size limit is exceeded";
+                }
             } else {
-                echo "File size limit is exceeded";
+                echo "An error occured in uploading the file";
             }
+
+
         } else {
-            echo "An error occured in uploading the file";
+            echo "Only pdf extension is allowed";
         }
 
 
-    } else {
-        echo "Only pdf extension is allowed";
-    }
+        //IMAGE UPLOAD
+        $file_image = $_FILES['image_upload'];
+        $file_image_name = $_FILES['image_upload']['name'];
+        $file_image_tmp_name = $_FILES['image_upload']['tmp_name'];
+        $file_image_size = $_FILES['image_upload']['size'];
+        $file_image_error = $_FILES['image_upload']['error'];
+        $file_image_type = $_FILES['image_upload']['type'];
+        $file_image_ext = explode('.', $file_image_name);
+        $file_image_actual_ext = strtolower(end($file_image_ext));
+        $allowed_image = array('jpg', 'jpeg', 'png');
 
+        if(in_array($file_image_actual_ext, $allowed_image)) {
+            if($file_image_error == 0) {
+                if($file_image_size < 500000000) {
+                    $file_image_name_new = $book_id . "." . $file_image_actual_ext;
+                    $file_image_destination = 'Assets/BookImages/'.$file_image_name_new;
+                    $product_image_link = $file_image_destination;
 
-    //IMAGE UPLOAD
-    $file_image = $_FILES['image_upload'];
-    $file_image_name = $_FILES['image_upload']['name'];
-    $file_image_tmp_name = $_FILES['image_upload']['tmp_name'];
-    $file_image_size = $_FILES['image_upload']['size'];
-    $file_image_error = $_FILES['image_upload']['error'];
-    $file_image_type = $_FILES['image_upload']['type'];
-    $file_image_ext = explode('.', $file_image_name);
-    $file_image_actual_ext = strtolower(end($file_image_ext));
-    $allowed_image = array('jpg', 'jpeg', 'png');
+                    $img_tmp_name = $file_image_tmp_name;
+                    $img_tmp_location = $file_image_destination;
 
-    if(in_array($file_image_actual_ext, $allowed_image)) {
-        if($file_image_error == 0) {
-            if($file_image_size < 500000000) {
-                $file_image_name_new = $book_id . "." . $file_image_actual_ext;
-                $file_image_destination = 'Assets/BookImages/'.$file_image_name_new;
-                $product_image_link = $file_image_destination;
-                move_uploaded_file($file_image_tmp_name, $file_image_destination);
+                    
+                } else {
+                    echo "File size limit is exceeded";
+                }
             } else {
-                echo "File size limit is exceeded";
+                echo "An error occured in uploading the file";
             }
         } else {
-            echo "An error occured in uploading the file";
+            echo "Only 'jpg', 'jpeg', 'png' extension is allowed";
         }
-    } else {
-        echo "Only 'jpg', 'jpeg', 'png' extension is allowed";
-    }
+        
 
-
-    $sql_insert = "INSERT INTO `books` (`id`, `category_id`, `name`, `author`, `description`, `price`, `total_products`, `product_preview_link`, `product_image_link`) VALUES ('$book_id', '$category_id', '$name', '$author', '$description', '$price', '$total_products', '$product_preview_link', '$product_image_link');";
-    $result = mysqli_query($conn, $sql_insert);
-
-    if ($result) {
-        header("location: books-admin.php");
-    } else {
-        echo "Submission Unsuccessful";
+        $sql_update_book = "UPDATE `books` SET `product_preview_link` = '$product_preview_link', `product_image_link` = '$product_image_link' WHERE `books`.`id` = $book_id;";
+        $result = mysqli_query($conn, $sql_update_book);
+        
+        if ($result) {
+            move_uploaded_file($preview_tmp_name, $preview_tmp_location);
+            move_uploaded_file($img_tmp_name, $img_tmp_location);
+            header("location: books.php");
+        } else {
+            echo "Submission Unsuccessful";
+        }
     }
 }
 
