@@ -12,6 +12,12 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['
 
 $cart_book_sql = "SELECT * FROM `book_cart` WHERE user_id=$id";
 $cart_book = mysqli_query($conn, $cart_book_sql);
+$num_cart_rows = mysqli_num_rows($cart_book);
+
+if($num_cart_rows == 0) {
+  header("location: books.php");
+    exit;
+}
 
 ?>
 
