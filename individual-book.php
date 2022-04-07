@@ -37,6 +37,7 @@ $book = mysqli_query($conn, $book_sql);
             $book_id = $row['id'];
             $img_link = $row['product_image_link'];
             $book_title = $row['name'];
+            $price = $row['price'];
             if(strlen($book_title) < 10) {
               $book_title .= " Limited Series";
             }
@@ -56,7 +57,8 @@ $book = mysqli_query($conn, $book_sql);
                 <h1 class="h1">'.$book_title.'</h1>
                 <h5 class="card-title">Category: '.$category_name.'</h5>
                 <h5 class="card-title">Author: '.$book_author.'</h5>
-                <p class="card-text">'.$book_description.'</p>
+                <h5 class="card-title">Book Price: '.$price.' Tk</h5>
+                <p class="card-text h4 font-weight-light text-left">'.$book_description.'</p>
                 <a href="#" class="btn btn-primary">Add To Cart</a>
                 <a href="'.$book_preview_pdf.'" class="btn btn-primary" target="_blank">Preview Book</a>
             </div>';
