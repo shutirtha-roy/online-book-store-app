@@ -19,6 +19,26 @@ if($num_cart_rows == 0) {
     exit;
 }
 
+
+
+//USER
+$sql_user  = "SELECT * FROM `users` WHERE id='$id'";
+$user_list = mysqli_query($conn, $sql_user);
+$user_row = mysqli_fetch_assoc($user_list);
+$location = $user_row['location'];
+
+
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+  $updated_location = $_POST['location'];
+  $user_update = "UPDATE `users` SET `location` = '$updated_location' WHERE `users`.`id` = $id;";
+  $user_update_query = mysqli_query($conn, $user_update);
+  print_r($user_update_query);
+  if($user_update_query) {
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    exit;
+  }
+}
+
 ?>
 
 
@@ -49,10 +69,6 @@ if($num_cart_rows == 0) {
 
 
 
-
-
-
-
     <h1 class="heading h2 mb-5">Books Ordered</h1>
     <table class="table table-dark mx-auto" style="text-align: center; width: 80%;">
         <thead>
@@ -64,6 +80,7 @@ if($num_cart_rows == 0) {
           </tr>
         </thead>
         <tbody>
+
         <?php
           $count = 1;
           $total = 0;
@@ -90,15 +107,21 @@ if($num_cart_rows == 0) {
 
           }
         ?>
+
           <tr>
             <td>
             <td>Total Price</td>
-            
             <td colspan="2"> <?php echo $total ?> Taka</td>
           </tr>
           
         </tbody>
       </table>
+
+      <form class="input-group mb-5 mt-4 w-50 mx-auto" method="post">
+        <label for="location" class="h4 pr-3">Delivery Location</label>
+        <input type="text" class="form-control font-weight-bold" id="location" name="location"  placeholder="Enter your location" value="<?php echo $location ?>" required>
+        <button type="submit" class="btn btn-outline-secondary btn-primary text-white font-weight-bold" >Change Delivery Location</button>
+      </form>
 
 
       <div class="purchase-btn mb-5">
