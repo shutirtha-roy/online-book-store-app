@@ -10,8 +10,7 @@ let passwordValue = "";
 
 //Regex Pattern
 const emailPatten = /\S+@\S+\.\S+/;
-//const passwordPattern = /^([a-zA-Z0-9_-]?@){5,50}$/;
-const passwordPattern = /(.*?){5,50}/;
+const passwordPattern = /^.{5,50}$/i;
 
 
 //Alert Message
@@ -42,26 +41,12 @@ let validation = (event, inputValue, validationFunction, showAlertMessage) => {
     }
 }
 
-
 let emailValidation = (email) => {
     validation(alertEmail, email, validateInEmail, alertMessage["Email Address"]);
 }
 
 let passwordValidation = (password) => {
     validation(alertPassword, password, validateInPassword, alertMessage.Password);
-}
-
-
-
-let checkIfInputNotEmpty = (values) => {
-    values.forEach(item => {
-        
-        if(item === "") {
-            return false;
-        } else {
-            return true;
-        }
-    });
 }
 
 let checkLoginValidation  = (emailValue, passwordValue) => {
