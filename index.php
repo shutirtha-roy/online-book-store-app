@@ -29,7 +29,7 @@ session_start();
 
 
     <div class="home-section align-middle">
-        <a href="general-books.php" id="welcome-message" class="animate-typing heading mt-5 p-5 display-3" data-animate-loop="true" data-type-speed="150" data-type-delay="5" data-remove-speed="50" data-remove-delay="800" data-cursor-speed="200" data-animate-index="0">Welcome to Roy's Online Book Store</a>
+        <a href="general-books.php" id="welcome-message" class="animate-typing heading mt-5 p-5 display-3" data-animate-loop="true" data-type-speed="120" data-type-delay="0" data-remove-speed="50" data-remove-delay="800" data-cursor-speed="200" data-animate-index="0">Welcome to Roy's Online Book Store</a>
     </div>
 
     
