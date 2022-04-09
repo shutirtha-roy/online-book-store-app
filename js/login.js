@@ -31,22 +31,29 @@ let validateInPassword = (password) => {
 
 
 
-let validation = (event, inputValue, validationFunction, showAlertMessage) => {
+let validation = (event, inputValue, validationFunction, showAlertMessage, selector) => {
     if(inputValue === "") {
+        selector.classList.remove("error");
+        selector.classList.remove("success");
         event.textContent = "";
     } else if(!validationFunction(inputValue)) {
+        selector.classList.add("error");
+        selector.classList.remove("success");
         event.textContent = showAlertMessage;
     } else {
+        selector.classList.remove("error");
+        selector.classList.add("success");
         event.textContent = "";
+        
     }
 }
 
 let emailValidation = (email) => {
-    validation(alertEmail, email, validateInEmail, alertMessage["Email Address"]);
+    validation(alertEmail, email, validateInEmail, alertMessage["Email Address"], document.querySelector("#email"));
 }
 
 let passwordValidation = (password) => {
-    validation(alertPassword, password, validateInPassword, alertMessage.Password);
+    validation(alertPassword, password, validateInPassword, alertMessage.Password, document.querySelector("#password"));
 }
 
 let checkLoginValidation  = (emailValue, passwordValue) => {
