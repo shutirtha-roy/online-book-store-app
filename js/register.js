@@ -24,7 +24,7 @@ let locationValue = "";
 
 //Regex Pattern
 const namePattern = /^[a-zA-Z]+$/;
-const userNamePattern = /^[a-zA-Z0-9]{5}$/;
+const userNamePattern = /^.{5,50000000}$/i;
 const emailPatten = /\S+@\S+\.\S+/;
 const passwordPattern = /^.{5,50}$/i;
 const locationPattern = /^.{10,50000000}$/i;
@@ -33,7 +33,7 @@ const locationPattern = /^.{10,50000000}$/i;
 //Alert Message
 const alertMessage = {
     Name : "Name must not contain any special characters/number",
-    Username: "Username must have 5 characters",
+    Username: "Username must have more than 5 characters",
     "Email Address": "Must be valid email address with domain such as gmail, yahoo",
     Password : "Password Length must be greater than 5 and less than 50",
     "Confirm Password" : "Password not matched",
@@ -61,43 +61,55 @@ let validateLocation = (location) => {
     return locationPattern.test(location);
 }
 
-let validation = (event, inputValue, validationFunction, showAlertMessage) => {
+let validation = (event, inputValue, validationFunction, showAlertMessage, selector) => {
     if(inputValue === "") {
+        selector.classList.remove("error");
+        selector.classList.remove("success");
         event.textContent = "";
     } else if(!validationFunction(inputValue)) {
+        selector.classList.add("error");
+        selector.classList.remove("success");
         event.textContent = showAlertMessage;
     } else {
+        selector.classList.remove("error");
+        selector.classList.add("success");
         event.textContent = "";
     }
 }
 
 let nameValidation = (name) => {
-    validation(alertName, name, validateInName, alertMessage.Name);
+    validation(alertName, name, validateInName, alertMessage.Name, document.querySelector("#name"));
 }
 
 let userNameValidation = (username) => {
-    validation(alertUsername, username, validateInUserName, alertMessage.Username);
+    validation(alertUsername, username, validateInUserName, alertMessage.Username, document.querySelector("#username"));
 }
 
 let emailValidation = (email) => {
-    validation(alertEmail, email, validateInEmail, alertMessage["Email Address"]);
+    validation(alertEmail, email, validateInEmail, alertMessage["Email Address"], document.querySelector("#email"));
 }
 
 let passwordValidation = (password) => {
-    validation(alertPassword, password, validateInPassword, alertMessage.Password);
+    validation(alertPassword, password, validateInPassword, alertMessage.Password, document.querySelector("#password"));
 }
 
 let locationValidation = (location) => {
-    validation(alertLocation, location, validateLocation, alertMessage.Location);
+    validation(alertLocation, location, validateLocation, alertMessage.Location, document.querySelector("#location"));
 }
 
-let confirmPasswordValidation = (passwordValue, confirmPasswordValue) => {
+let confirmPasswordValidation = (passwordValue, confirmPasswordValue, selector) => {
     
     if(confirmPasswordValue === "") {
+        selector.classList.remove("error");
+        selector.classList.remove("success");
         alertConfirmPassword.textContent = "";
     } else if(passwordValue !== confirmPasswordValue) {
+        selector.classList.add("error");
+        selector.classList.remove("success");
         alertConfirmPassword.textContent = alertMessage["Confirm Password"];
     } else {
+        selector.classList.remove("error");
+        selector.classList.add("success");
         alertConfirmPassword.textContent = "";
     }
 }
@@ -108,7 +120,7 @@ let checkAllValidation = (nameValue, usernameValue, emailValue, passwordValue, c
     userNameValidation(usernameValue);
     emailValidation(emailValue);
     passwordValidation(passwordValue);
-    confirmPasswordValidation(passwordValue, confirmPasswordValue);
+    confirmPasswordValidation(passwordValue, confirmPasswordValue, document.querySelector("#confirm-password"));
     locationValidation(locationValue);
 }
 
