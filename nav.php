@@ -16,40 +16,40 @@
 
         if(!$loggedin) {
           echo '<li class="nav-item active">
-                    <a class="nav-link" href="index.php">Home</a>
+                    <a class="nav-link link-effect" href="index.php">Home</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="general-books.php">Books</a>
+                    <a class="nav-link link-effect" href="general-books.php">Books</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="register.php">Register</a>
+                    <a class="nav-link link-effect" href="register.php">Register</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="login.php">Login</a>
+                    <a class="nav-link link-effect" href="login.php">Login</a>
                 </li>
         ';
         }
  
         if($loggedin && $_SESSION['email'] == "admin@gmail.com") {
           echo '<li class="nav-item active">
-                    <a class="nav-link" href="admin.php">Dashboard</a>
+                    <a class="nav-link link-effect" href="admin.php">Dashboard</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="books.php">Books</a>
+                    <a class="nav-link link-effect" href="books.php">Books</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="logout.php">Logout</a>
+                    <a class="nav-link link-effect" href="logout.php">Logout</a>
                 </li>
         ';
         } else if($loggedin && $_SESSION['email'] != "admin@gmail.com") {
           echo '<li class="nav-item active">
-                    <a class="nav-link" href="user.php">Dashboard</a>
+                    <a class="nav-link link-effect" href="user.php">Dashboard</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="books.php">Books</a>
+                    <a class="nav-link link-effect" href="books.php">Books</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="logout.php">Logout</a>
+                    <a class="nav-link link-effect" href="logout.php">Logout</a>
                 </li>';
         }
         echo '
