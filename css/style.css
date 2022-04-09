@@ -7,6 +7,11 @@
 }
 
 :root {
+    --success-color: #2ecc71;
+    --error-color: #e74c4c;;
+}
+
+:root {
     --game-message: rgb(170, 216, 238);
 }
 
@@ -50,6 +55,14 @@ li {
 }
 
 
+
+.success {
+    border: 3px solid var(--success-color) !important;
+}
+
+.error {
+    border: 3px solid var(--error-color) !important;
+}
 
 
 
