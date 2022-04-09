@@ -23,7 +23,7 @@ let locationValue = "";
 
 
 //Regex Pattern
-const namePattern = /^[a-zA-Z]+$/;
+const namePattern = /^[a-zA-Z\s]+$/;
 const userNamePattern = /^.{5,50000000}$/i;
 const emailPatten = /\S+@\S+\.\S+/;
 const passwordPattern = /^.{5,50}$/i;
