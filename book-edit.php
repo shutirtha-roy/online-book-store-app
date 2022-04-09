@@ -78,29 +78,33 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <h1 class="heading mt-5 h1">Edit Book</h1>
     <div class="register">
         <div class="register-form">
-            <form class="login-form mx-auto" method="post">
+            <form class="login-form mx-auto" method="post" id="edit-form">
                 <div class="form-group">
                     <label for="name">Book Name</label>
                     <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" value="<?php echo $name ?>" required>
+                    <p id="alertName" class="text-danger font-weight-bold form-text"></p>
                 </div>
                 <div class="form-group">
                     <label for="name">Author Name</label>
-                    <input type="text" class="form-control" id="name" placeholder="Enter name of the author" name="author" value="<?php echo $author ?>" required>
+                    <input type="text" class="form-control" id="author_name" placeholder="Enter name of the author" name="author" value="<?php echo $author ?>" required>
+                    <p id="alertAuthorName" class="text-danger font-weight-bold form-text"></p>
                 </div>
                 <div class="form-group">
-                    <label for="exampleFormControlTextarea1">Description</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"><?php echo $description ?></textarea>
+                    <label for="description">Description</label>
+                    <textarea class="form-control" id="description" rows="3" name="description"><?php echo $description ?></textarea>
+                    <p id="alertDescription" class="text-danger font-weight-bold form-text"></p>
                 </div>
                 <div class="form-group">
                     <label for="name">Price</label>
                     <input type="number" class="form-control" id="price" placeholder="Enter the price" name="price" value="<?php echo $price ?>" required>
+                    <p id="alertPrice" class="text-danger font-weight-bold form-text"></p>
                 </div>
                 <div class="form-group">
                     <label for="name">Total Books</label>
                     <input type="number" class="form-control" id="total_products" placeholder="Enter the amount of Books" name="total_products" value="<?php echo $total_products ?>" required>
+                    <p id="alertTotalProducts" class="text-danger font-weight-bold form-text"></p>
                 </div>
 
-                <?php echo $category_name; ?>
                 <label for="select">Category</label>
                 <select name="category_id" class="custom-select mt-2 mb-4" id="inputGroupSelect04" aria-label="Example select with button addon">
                     <?php
@@ -131,7 +135,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="js/app.js"></script>
+    <script src="js/edit-book.js"></script>
     
 </body>
 </html>
