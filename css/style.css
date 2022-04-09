@@ -29,6 +29,17 @@ li {
     list-style-type: none;
 }
 
+/************************NAV SECTION***********************/
+.link-effect {
+    
+}
+
+.link-effect:hover {
+    transition-timing-function: ease-in-out;
+    transition-delay: 0.3s;
+    transform: scale(1.15);
+}
+
 
 /***********************HOME SECTION***********************/
 .heading {
@@ -37,6 +48,16 @@ li {
     position: relative;
 }
 
+
+#welcome-message {
+    position: absolute;
+    top: 25%;
+    left: 20%;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+    
+}
 
 
 /**********************BOOK SECTION/**********************/
