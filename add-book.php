@@ -39,13 +39,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $description = str_replace(' ', '-', $description);
     $description = preg_replace('/[^A-Za-z0-9\-]/', '', $description);
     $description = str_replace('-', ' ', $description);
-    //$sql_insert = "INSERT INTO `books` (`category_id`, `name`, `author`, `description`, `price`, `total_products`, `product_preview_link`, `product_image_link`) VALUES ('$category_id', '$name', '$author', '$description', '$price', '$total_products', '$product_preview_link', '$product_image_link');";
     $sql_insert = "INSERT INTO `books` (`id`, `category_id`, `name`, `author`, `description`, `price`, `total_products`, `product_preview_link`, `product_image_link`) VALUES (NULL, '$category_id', '$name', '$author', '$description', $price, $total_products, 'test', 'test');";
-    
-    //$sql_insert = "INSERT INTO `books` (`id`, `category_id`, `name`, `author`, `description`, `price`, `total_products`, `product_preview_link`, `product_image_link`) VALUES (NULL, '3', 'yuyu', 'yuyu', 'Debbie had taken George for granted for more than fifteen years now. He wasn\'t sure what exactly had made him choose this time and place to address the issue, but he decided that now was the time. He looked straight into her eyes and just as she was about to speak, turned away and walked out the door. Betty decided to write a short story and she was sure it was going to be amazing. She had already written it in her head and each time she thought about it she grinned from ear to ear knowing how wonderful it would be. She could imagine the accolades coming in and the praise she would receive for creating such a wonderful piece. She was therefore extremely frustrated when she actually sat down to write the short story and the story that was so beautiful inside her head refused to come out that way on paper. He was after the truth. At least, that\'s what he told himself. He believed it, but any rational person on the outside could see he was lying to himself. It was apparent he was really only after his own truth that he\'d already decided and was after this truth because the facts didn\'t line up with the truth he wanted. So he continued to tell everyone he was after the truth oblivious to the real truth sitting right in front of him.', '23', '23', 'weer', 'rer')";
-    /* if (!$mysqli -> query("INSERT INTO `books` (`id`, `category_id`, `name`, `author`, `description`, `price`, `total_products`, `product_preview_link`, `product_image_link`) VALUES (NULL, '$category_id', '$name', '$author', '$description', '$price', '$total_products', 'test', 'test');")) {
-        print_r($mysqli -> error_list);
-    } */
 
     $result_insert = mysqli_query($conn, $sql_insert);
 
@@ -165,11 +159,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
 
-    <form action="add-book.php" method="post" enctype="multipart/form-data" class="p-5">
+    <form action="add-book.php" method="post" enctype="multipart/form-data" class="p-5" id="add-form">
         <div class="form-group">
             <div class="form-group">
                 <label for="name">Book Name</label>
                 <input type="text" class="form-control" id="name" placeholder="Enter name of the book" name="name" required>
+                <p id="alertName" class="text-danger font-weight-bold form-text"></p>
             </div>
 
             <div class="group-content">
@@ -188,19 +183,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="form-group">
                 <label for="name">Author Name</label>
-                <input type="text" class="form-control" id="name" placeholder="Enter name of the author" name="author" required>
+                <input type="text" class="form-control" id="author_name" placeholder="Enter name of the author" name="author" required>
+                <p id="alertAuthorName" class="text-danger font-weight-bold form-text"></p>
             </div>
             <div class="form-group">
-                <label for="exampleFormControlTextarea1">Description</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"></textarea>
+                <label for="description">Description</label>
+                <textarea class="form-control" id="description" rows="3" name="description"></textarea>
+                <p id="alertDescription" class="text-danger font-weight-bold form-text"></p>
             </div>
             <div class="form-group">
                 <label for="name">Price</label>
                 <input type="number" class="form-control" id="price" placeholder="Enter the price" name="price" required>
+                <p id="alertPrice" class="text-danger font-weight-bold form-text"></p>
             </div>
             <div class="form-group">
                 <label for="name">Total Books</label>
                 <input type="number" class="form-control" id="total_products" placeholder="Enter the amount of Books" name="total_products" required>
+                <p id="alertTotalProducts" class="text-danger font-weight-bold form-text"></p>
             </div>
             <div class="form-group">
                 <label for="pdf_upload" class="d-block h4">Select pdf to upload for preview</label>
@@ -228,7 +227,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="js/app.js"></script>
+    <script src="js/add-book.js"></script>
     
 </body>
 </html>
