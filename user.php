@@ -24,6 +24,26 @@ $purchase_book = "SELECT * FROM `book_purchase` WHERE user_id=$user_id";
 $purchase_list = mysqli_query($conn, $purchase_book);
 $purchase_rows = mysqli_num_rows($purchase_list);
 
+
+$months = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July ', 'August', 'September', 'October', 'November', 'December'];
+
+function total_days($year, $month, $day) {
+  return $year * 365 + $month * 30 + $day;
+}
+
+function time_difference($time_day_now, $time_day_past) {
+  return $time_day_now - $time_day_past;
+}
+
+function delivery_time($date_remaining) {
+  if($date_remaining >= 5) {
+    return "<button class='btn btn-success'>Delivered</button>";
+  } else {
+    $delivery_remaining = 5 - $date_remaining;
+    return $delivery_remaining . " days remaining";
+  }
+}
+
 ?>
 
 
@@ -98,6 +118,8 @@ $purchase_rows = mysqli_num_rows($purchase_list);
                                 <th scope="col">Book name</th>
                                 <th scope="col">Book id</th>
                                 <th scope="col">Price</th>
+                                <th scope="col">Date Purchased</th>
+                                <th scope="col">Delivery Duration</th>
                               </tr>
                         </thead>
                         <tbody>';
@@ -107,13 +129,36 @@ $purchase_rows = mysqli_num_rows($purchase_list);
                           $book_id = $row['product_id'];
                           $book_title = $row['product_name'];
                           $price = $row['price'];
+                          $time = $row['date_purchased'];
+
+
+                          $time_split = explode(':', $time);
+                          $day = (int)$time_split[0];
+                          $month = (int)$time_split[1];
+                          $month_name = $months[$month];
+                          $year = (int)$time_split[2];
+                          $total_day_then = total_days($year, $month, $day);
+
+
+                          $time_now = date("d:m:y");
+                          $time_now_split = explode(':', $time_now);
+                          $day_now = (int)$time_now_split[0];
+                          $month_now = (int)$time_now_split[1];
+                          $year_now = (int)$time_now_split[2];
+                          $total_day_now = total_days($year_now, $month_now, $day_now);
+                          
+                          $delivery_status = delivery_time(time_difference($total_day_now, $total_day_then));
+
                           echo '<tr>
                               <th scope="row">'.$count.'</th>
                               <td>'.$book_title.'</td>
                               <td>'.$book_id.'</td>
                               <td>'.$price.' Tk</td>
+                              <td>'.$day .' '.  $month_name.' 20' .  $year.'</td>
+                              <td>'. $delivery_status  .'</td>
                             </tr>';
                             $count += 1;
+
                           }
                     echo '</tbody>
                   </table>';
