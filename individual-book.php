@@ -9,6 +9,30 @@ session_start();
 $book_sql = "SELECT * FROM `books` WHERE id=$id";
 $book = mysqli_query($conn, $book_sql);
 
+$showAlert = false;
+
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $book_cart = "SELECT * FROM `book_cart`";
+    $cart_list = mysqli_query($conn, $book_cart);
+    $numExistRows = mysqli_num_rows($cart_list);
+
+    $cart_id = $numExistRows + 1;
+    //$user_id;
+    $product_id = $_POST['book_id'];
+    //$user_name
+    $book_title = $_POST['book_title'];
+    $book_price = $_POST['book_price']; 
+
+    $sql_cart = "INSERT INTO `book_cart` (`user_id`, `product_id`, `user_name`, `product_name`, `price`) VALUES ('$user_id', '$product_id', '$user_name', '$book_title', '$book_price');";
+    $result_cart = mysqli_query($conn, $sql_cart);
+    if ($result_cart) {
+        $showAlert = true;
+    }
+
+
+}
+
 
 ?>
 
@@ -28,9 +52,24 @@ $book = mysqli_query($conn, $book_sql);
 
     <?php require 'nav.php'; ?>
 
-    <div class="alert alert-success" role="alert" hidden>
-        Book Added to Cart 
-    </div>
+    <?php
+
+    if($showAlert) {
+      $book_cart_user = "SELECT * FROM `book_cart` WHERE user_id=$user_id";
+      $user_cart_list = mysqli_query($conn, $book_cart_user);
+      $num_cart_user_rows = mysqli_num_rows($user_cart_list);
+
+      $user_cart_id = "cart.php?userid=".$user_id;
+      echo '<div class="alert alert-success w-50 mx-auto" role="alert">
+              Added To Cart <b><span>' . $num_cart_user_rows . '</span> Book Added</b> 
+              <a type="submit" href="'.$user_cart_id.'" class="btn btn-outline-secondary bg-dark text-white ml-5 font-weight-bold" value="" name="submit" type="button">Proceed To Checkout</a>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>';
+    }
+
+    ?>
 
     <?php
         while($row = mysqli_fetch_assoc($book)) {
@@ -59,7 +98,12 @@ $book = mysqli_query($conn, $book_sql);
                 <h5 class="card-title">Author: '.$book_author.'</h5>
                 <h5 class="card-title">Book Price: '.$price.' Tk</h5>
                 <p class="card-text h4 font-weight-light text-left">'.$book_description.'</p>
-                <a href="#" class="btn btn-primary">Add To Cart</a>
+                <form action="books.php" method="post" class="d-inline">
+                    <input type="number" name="book_id" value="'.$book_id.'" hidden>
+                    <input type="text" name="book_title" value="'.$book_title.'" hidden>
+                    <input type="number" name="book_price" value="'.$price.'" hidden>
+                    <input type="submit" class="btn btn-primary" value="Add_To_Cart" name="submit" type="button"></input>
+                </form>
                 <a href="'.$book_preview_pdf.'" class="btn btn-primary" target="_blank">Preview Book</a>
             </div>';
         }
