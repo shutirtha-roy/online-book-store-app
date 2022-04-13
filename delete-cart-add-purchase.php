@@ -28,6 +28,7 @@ while($row = mysqli_fetch_assoc($cart_book)) {
     $price = $row['price'];
 
     $time_now = date("d:m:y");
+    
 
     $sql_purchase = "INSERT INTO `book_purchase` (`user_id`, `product_id`, `user_name`, `product_name`, `price`, `date_purchased`) VALUES ('$user_id', '$product_id', '$user_name', '$book_title', '$price', '$time_now');";
     $result_purchase = mysqli_query($conn, $sql_purchase);
