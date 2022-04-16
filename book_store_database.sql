@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 13, 2022 at 10:07 AM
+-- Generation Time: Apr 16, 2022 at 05:25 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.14
 
@@ -78,21 +78,21 @@ CREATE TABLE `book_purchase` (
   `product_id` int(11) NOT NULL,
   `user_name` varchar(255) NOT NULL,
   `product_name` varchar(255) NOT NULL,
-  `price` float NOT NULL
+  `price` float NOT NULL,
+  `date_purchased` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `book_purchase`
 --
 
-INSERT INTO `book_purchase` (`id`, `user_id`, `product_id`, `user_name`, `product_name`, `price`) VALUES
-(14, 4, 63, 'Samin', 'Emma Limited Series', 185),
-(15, 4, 64, 'Samin', 'The Art of War', 215),
-(16, 4, 67, 'Samin', 'Collected Works of Poe', 268),
-(19, 4, 64, 'Samin', 'The Art of War', 215),
-(20, 4, 67, 'Samin', 'Collected Works of Poe', 268),
-(21, 4, 63, 'Samin', 'Emma Limited Series', 185),
-(22, 3, 64, 'Mark', 'The Art of War', 215);
+INSERT INTO `book_purchase` (`id`, `user_id`, `product_id`, `user_name`, `product_name`, `price`, `date_purchased`) VALUES
+(24, 4, 63, 'Samin', 'Emma Limited Series', 185, '2:04:22'),
+(25, 4, 64, 'Samin', 'The Art of War', 215, '13:04:22'),
+(26, 3, 64, 'Mark', 'The Art of War', 215, '13:04:22'),
+(27, 3, 63, 'Mark', 'Emma Limited Series', 185, '13:04:22'),
+(28, 3, 67, 'Mark', 'Collected Works of Poe', 268, '13:04:22'),
+(29, 4, 62, 'Samin', 'Pride and Prejudice', 150, '13:04:22');
 
 -- --------------------------------------------------------
 
@@ -137,7 +137,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `username`, `email`, `name`, `password`, `role`, `location`) VALUES
 (1, 'admin', 'admin@gmail.com', 'Admin', '18301028', 'admin', 'Dhaka, Bangladesh'),
 (2, 'sam123', 'sam@gmail.com', 'Sam', 'sam@gmail.com', 'user', '2/5, Lalmatia D-Block, Dhaka, Bangladesh - 1294'),
-(3, 'mark', 'mark@gmail.com', 'Mark', 'mark@gmail.com', 'user', '4B, Gulshan, Dhaka-1202'),
+(3, 'mark', 'mark@gmail.com', 'Mark', 'mark@gmail.com', 'user', '4B, Gulshan, Dhaka-1204'),
 (4, 'samin', 'samin@gmail.com', 'Samin', 'samin@gmail.com', 'user', '34B, Sherektek Road, Sylhet, Bangladesh'),
 (5, 'asif', 'asif@gmail.com', 'Asif', 'asif@gmail.com', 'user', '12, Nikunjo, Dhaka');
 
@@ -194,13 +194,13 @@ ALTER TABLE `books`
 -- AUTO_INCREMENT for table `book_cart`
 --
 ALTER TABLE `book_cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `book_purchase`
 --
 ALTER TABLE `book_purchase`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `categories`

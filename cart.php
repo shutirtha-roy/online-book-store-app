@@ -1,4 +1,6 @@
 <?php
+ob_start();
+
 
 include 'Config/connect.php';
 $id = $_GET['userid'];
