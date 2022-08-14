@@ -2,7 +2,7 @@
 
 Project Features:
 By the end of this course, implemented features:
-a) Registration System
+a) Registration System_
 b) Login System
 c) Admin Panel
 d) User Panel
