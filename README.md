@@ -1,4 +1,4 @@
-#Project Title: Online Book Store
+#Online Book Store
 
 Project Features:
 By the end of this course, implemented features:
