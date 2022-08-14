@@ -1,8 +1,8 @@
 # Online_Book_Store
-
-Project Features:
-By the end of this course, implemented features:
-a) Registration System__
+<br />
+Project Features: <br />
+By the end of this course, implemented features: <br />
+a) Registration System <br />
 b) Login System
 c) Admin Panel
 d) User Panel
